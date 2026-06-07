@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Loumi — Research Engineer</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0a0a0f;
+      --surface: #111118;
+      --border: #1e1e2e;
+      --accent: #7c6af7;
+      --accent2: #4fd1a5;
+      --text: #e8e8f0;
+      --muted: #6b6b80;
+      --dim: #3a3a50;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'DM Mono', monospace;
+      font-size: 14px;
+      line-height: 1.7;
+      overflow-x: hidden;
+    }
+
+    /* ── Grid noise overlay ── */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.4;
+    }
+
+    /* ── Layout ── */
+    .container {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 0 2rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ── Nav ── */
+    nav {
+      padding: 2rem 0 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .nav-logo {
+      font-family: 'Instrument Serif', serif;
+      font-size: 1.1rem;
+      color: var(--text);
+      text-decoration: none;
+      letter-spacing: 0.02em;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.75rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--text); }
+
+    /* ── Hero ── */
+    .hero {
+      padding: 5rem 0 3.5rem;
+      position: relative;
+    }
+
+    .hero-label {
+      font-size: 0.7rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--accent);
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .hero-label::before {
+      content: '';
+      display: inline-block;
+      width: 20px;
+      height: 1px;
+      background: var(--accent);
+    }
+
+    h1 {
+      font-family: 'Instrument Serif', serif;
+      font-size: clamp(2.4rem, 6vw, 3.8rem);
+      line-height: 1.1;
+      letter-spacing: -0.01em;
+      color: var(--text);
+      margin-bottom: 1.5rem;
+    }
+
+    h1 em {
+      font-style: italic;
+      color: var(--accent);
+    }
+
+    .hero-desc {
+      color: var(--muted);
+      font-size: 0.85rem;
+      max-width: 480px;
+      line-height: 1.8;
+      margin-bottom: 2.5rem;
+    }
+
+    .hero-links {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.55rem 1.2rem;
+      border-radius: 4px;
+      font-family: 'DM Mono', monospace;
+      font-size: 0.75rem;
+      letter-spacing: 0.06em;
+      text-decoration: none;
+      transition: all 0.2s;
+      cursor: pointer;
+      border: none;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #fff;
+    }
+
+    .btn-primary:hover {
+      background: #9585fa;
+      transform: translateY(-1px);
+    }
+
+    .btn-ghost {
+      background: transparent;
+      color: var(--muted);
+      border: 1px solid var(--border);
+    }
+
+    .btn-ghost:hover {
+      border-color: var(--dim);
+      color: var(--text);
+    }
+
+    /* ── Section ── */
+    section {
+      padding: 4rem 0;
+      border-top: 1px solid var(--border);
+    }
+
+    .section-label {
+      font-size: 0.7rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 2.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    .section-label span {
+      color: var(--dim);
+    }
+
+    /* ── Projects ── */
+    .projects { display: flex; flex-direction: column; gap: 1px; }
+
+    .project-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 1.6rem;
+      margin-bottom: 1rem;
+      transition: border-color 0.2s, transform 0.2s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .project-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 3px; height: 100%;
+      background: var(--accent);
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+
+    .project-card:hover {
+      border-color: var(--dim);
+      transform: translateX(3px);
+    }
+
+    .project-card:hover::before { opacity: 1; }
+
+    .project-card.in-progress::before {
+      background: var(--accent2);
+      opacity: 1;
+    }
+
+    .project-card.soon::before {
+      background: var(--dim);
+      opacity: 1;
+    }
+
+    .project-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 0.7rem;
+      gap: 1rem;
+    }
+
+    .project-title {
+      font-family: 'Instrument Serif', serif;
+      font-size: 1.15rem;
+      color: var(--text);
+    }
+
+    .badge {
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 0.2rem 0.6rem;
+      border-radius: 3px;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+
+    .badge-done { background: rgba(124,106,247,0.15); color: var(--accent); }
+    .badge-wip  { background: rgba(79,209,165,0.15);  color: var(--accent2); }
+    .badge-soon { background: rgba(58,58,80,0.5);      color: var(--muted); }
+
+    .project-desc {
+      color: var(--muted);
+      font-size: 0.8rem;
+      line-height: 1.75;
+      margin-bottom: 1rem;
+    }
+
+    .project-meta {
+      display: flex;
+      gap: 1.2rem;
+      flex-wrap: wrap;
+      margin-bottom: 1rem;
+    }
+
+    .meta-item {
+      font-size: 0.72rem;
+      color: var(--dim);
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+
+    .meta-item strong { color: var(--muted); }
+
+    .project-tags {
+      display: flex;
+      gap: 0.4rem;
+      flex-wrap: wrap;
+    }
+
+    .tag {
+      font-size: 0.68rem;
+      padding: 0.15rem 0.5rem;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--border);
+      border-radius: 3px;
+      color: var(--muted);
+    }
+
+    .project-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      margin-top: 1rem;
+      font-size: 0.72rem;
+      color: var(--accent);
+      text-decoration: none;
+      opacity: 0.8;
+      transition: opacity 0.15s;
+    }
+
+    .project-link:hover { opacity: 1; }
+
+    /* ── Research ── */
+    .research-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 1.6rem;
+    }
+
+    .research-title {
+      font-family: 'Instrument Serif', serif;
+      font-size: 1rem;
+      color: var(--text);
+      margin-bottom: 0.5rem;
+    }
+
+    .research-desc {
+      color: var(--muted);
+      font-size: 0.8rem;
+      line-height: 1.75;
+      margin-bottom: 1rem;
+    }
+
+    .research-keywords {
+      display: flex;
+      gap: 0.4rem;
+      flex-wrap: wrap;
+    }
+
+    /* ── Stack ── */
+    .stack-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+      gap: 0.5rem;
+    }
+
+    .stack-item {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 0.5rem 0.8rem;
+      font-size: 0.75rem;
+      color: var(--muted);
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .stack-dot {
+      width: 5px; height: 5px;
+      border-radius: 50%;
+      background: var(--accent);
+      flex-shrink: 0;
+    }
+
+    /* ── Footer ── */
+    footer {
+      padding: 2.5rem 0;
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: gap;
+      gap: 1rem;
+    }
+
+    .footer-left {
+      font-size: 0.72rem;
+      color: var(--dim);
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 1.5rem;
+    }
+
+    .footer-links a {
+      font-size: 0.72rem;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+
+    .footer-links a:hover { color: var(--text); }
+
+    /* ── Animations ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(18px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    .hero, .project-card, .research-card {
+      animation: fadeUp 0.5s ease both;
+    }
+
+    .project-card:nth-child(1) { animation-delay: 0.05s; }
+    .project-card:nth-child(2) { animation-delay: 0.12s; }
+    .project-card:nth-child(3) { animation-delay: 0.19s; }
+
+    /* ── Cursor dot ── */
+    .cursor-dot {
+      position: fixed;
+      width: 6px; height: 6px;
+      background: var(--accent);
+      border-radius: 50%;
+      pointer-events: none;
+      z-index: 9999;
+      transition: transform 0.1s;
+      transform: translate(-50%, -50%);
+    }
+
+    @media (max-width: 600px) {
+      nav { flex-direction: column; align-items: flex-start; gap: 1rem; }
+      .hero { padding: 3rem 0 2.5rem; }
+      footer { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="cursor-dot" id="cursor"></div>
+
+<div class="container">
+
+  <!-- Nav -->
+  <nav>
+    <a href="#" class="nav-logo">loumi</a>
+    <ul class="nav-links">
+      <li><a href="#projects">projects</a></li>
+      <li><a href="#research">research</a></li>
+      <li><a href="#stack">stack</a></li>
+    </ul>
+  </nav>
+
+  <!-- Hero -->
+  <div class="hero">
+    <div class="hero-label">Research Engineer · PhD Candidate</div>
+    <h1>Deep Learning<br>for <em>Physical Systems</em></h1>
+    <p class="hero-desc">
+      PhD @Paris-Saclay × STMicroelectronics — surrogate models for FDTD simulation,
+      gradient-based inverse design of photonic metasurfaces, and JEPA-based world models.
+      Building research-grade ML systems from scratch.
+    </p>
+    <div class="hero-links">
+      <a href="https://github.com/loumpare" class="btn btn-primary" target="_blank">
+        <svg width="13" height="13" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.2 11.38.6.11.82-.26.82-.58v-2.17c-3.34.73-4.04-1.61-4.04-1.61-.54-1.38-1.33-1.75-1.33-1.75-1.09-.74.08-.73.08-.73 1.2.08 1.84 1.24 1.84 1.24 1.07 1.83 2.8 1.3 3.48 1 .11-.78.42-1.3.76-1.6-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.13-.3-.54-1.52.12-3.18 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 0 1 3-.4c1.02 0 2.04.13 3 .4 2.28-1.55 3.3-1.23 3.3-1.23.66 1.66.25 2.88.12 3.18.77.84 1.24 1.91 1.24 3.22 0 4.61-2.81 5.63-5.48 5.92.43.37.81 1.1.81 2.22v3.29c0 .32.22.7.83.58C20.57 21.8 24 17.3 24 12 24 5.37 18.63 0 12 0z"/></svg>
+        GitHub
+      </a>
+      <a href="mailto:loumi@example.com" class="btn btn-ghost">Contact</a>
+      <a href="#" class="btn btn-ghost">CV ↓</a>
+    </div>
+  </div>
+
+  <!-- Projects -->
+  <section id="projects">
+    <div class="section-label">
+      Projects <span>// ML portfolio</span>
+    </div>
+
+    <div class="projects">
+
+      <!-- I-JEPA -->
+      <div class="project-card">
+        <div class="project-header">
+          <span class="project-title">I-JEPA</span>
+          <span class="badge badge-done">✓ complete</span>
+        </div>
+        <p class="project-desc">
+          From-scratch reimplementation of Image Joint Embedding Predictive Architecture (Assran et al., CVPR 2023).
+          Block masking with aspect-ratio constraints, dual-encoder with EMA target, predictor with learnable mask tokens.
+        </p>
+        <div class="project-meta">
+          <span class="meta-item">Dataset <strong>STL-10 unlabeled</strong></span>
+          <span class="meta-item">Loss <strong>0.40 → 0.088</strong></span>
+          <span class="meta-item">Training <strong>100 epochs · ~72 min</strong></span>
+          <span class="meta-item">HW <strong>RTX 3090</strong></span>
+        </div>
+        <div class="project-tags">
+          <span class="tag">SSL</span>
+          <span class="tag">ViT</span>
+          <span class="tag">EMA</span>
+          <span class="tag">PyTorch</span>
+          <span class="tag">JEPA</span>
+        </div>
+        <a href="https://github.com/loumpare" class="project-link" target="_blank">
+          View on GitHub →
+        </a>
+      </div>
+
+      <!-- LeWorldModel -->
+      <div class="project-card in-progress">
+        <div class="project-header">
+          <span class="project-title">LeWorldModel</span>
+          <span class="badge badge-wip">in progress</span>
+        </div>
+        <p class="project-desc">
+          Reimplementation of the JEPA-based world model for robotics (arXiv 2603.19312).
+          Single encoder ViT, AdaLN action conditioning, SIGReg anti-collapse regularization — end-to-end gradient training without EMA.
+        </p>
+        <div class="project-meta">
+          <span class="meta-item">Dataset <strong>facebook/jepa-wms pusht</strong></span>
+          <span class="meta-item">Actions <strong>2-dim continuous</strong></span>
+        </div>
+        <div class="project-tags">
+          <span class="tag">World Model</span>
+          <span class="tag">AdaLN</span>
+          <span class="tag">SIGReg</span>
+          <span class="tag">Robotics</span>
+          <span class="tag">JEPA</span>
+        </div>
+      </div>
+
+      <!-- Kaggle -->
+      <div class="project-card soon">
+        <div class="project-header">
+          <span class="project-title">Histopathologic Cancer Detection</span>
+          <span class="badge badge-soon">upcoming</span>
+        </div>
+        <p class="project-desc">
+          Kaggle competition — SSL pretraining (JEPA-based) as methodological backbone for cancer detection
+          in histopathology patches. Portfolio capstone bridging self-supervised learning and medical imaging.
+        </p>
+        <div class="project-tags">
+          <span class="tag">Medical Imaging</span>
+          <span class="tag">SSL Pretraining</span>
+          <span class="tag">Kaggle</span>
+          <span class="tag">Transfer Learning</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Research -->
+  <section id="research">
+    <div class="section-label">
+      Research <span>// PhD thesis</span>
+    </div>
+    <div class="research-card">
+      <div class="project-header">
+        <span class="research-title">Surrogate Models & Inverse Design for Photonic Metasurfaces</span>
+      </div>
+      <p class="research-desc">
+        CIFRE PhD @Paris-Saclay in collaboration with STMicroelectronics.
+        Deep learning surrogate models for FDTD electromagnetic simulation, gradient-based inverse design,
+        and diffusion models (Schrödinger bridges) applied to nanophotonic structure optimization.
+      </p>
+      <div class="research-keywords">
+        <span class="tag">FDTD Simulation</span>
+        <span class="tag">Metasurfaces</span>
+        <span class="tag">Inverse Design</span>
+        <span class="tag">Schrödinger Bridges</span>
+        <span class="tag">Diffusion Models</span>
+        <span class="tag">Nanophotonics</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Stack -->
+  <section id="stack">
+    <div class="section-label">
+      Stack <span>// tools & frameworks</span>
+    </div>
+    <div class="stack-grid">
+      <div class="stack-item"><span class="stack-dot"></span>PyTorch</div>
+      <div class="stack-item"><span class="stack-dot"></span>JAX / Flax</div>
+      <div class="stack-item"><span class="stack-dot"></span>HuggingFace</div>
+      <div class="stack-item"><span class="stack-dot"></span>CUDA</div>
+      <div class="stack-item"><span class="stack-dot"></span>Python</div>
+      <div class="stack-item"><span class="stack-dot"></span>NumPy</div>
+      <div class="stack-item"><span class="stack-dot"></span>RTX 3090</div>
+      <div class="stack-item"><span class="stack-dot"></span>Linux</div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-left">loumi · Grenoble, France · 2025</div>
+    <div class="footer-links">
+      <a href="https://github.com/loumpare" target="_blank">GitHub</a>
+      <a href="https://linkedin.com" target="_blank">LinkedIn</a>
+      <a href="mailto:loumi@example.com">Email</a>
+    </div>
+  </footer>
+
+</div>
+
+<script>
+  // Subtle cursor dot
+  const cursor = document.getElementById('cursor');
+  document.addEventListener('mousemove', e => {
+    cursor.style.left = e.clientX + 'px';
+    cursor.style.top  = e.clientY + 'px';
+  });
+  document.addEventListener('mouseleave', () => cursor.style.opacity = '0');
+  document.addEventListener('mouseenter', () => cursor.style.opacity = '1');
+</script>
+
+</body>
+</html>
