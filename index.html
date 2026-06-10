@@ -443,7 +443,31 @@
       .exp-item { grid-template-columns:1fr; }
       .exp-left { text-align:left; flex-direction:row; align-items:center; gap:0.6rem; }
       .exp-dot { display:none; }
-    }  </style>
+    }
+    /* ── LANG SELECTOR ── */
+    .lang-selector {
+      display: flex; gap: 0.3rem; align-items: center;
+      margin-left: 1.5rem;
+    }
+    .lang-btn {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 0.62rem; letter-spacing: 0.08em;
+      padding: 0.18rem 0.42rem;
+      border: 1px solid transparent;
+      border-radius: 3px;
+      background: none;
+      color: var(--muted);
+      cursor: pointer;
+      transition: all 0.2s;
+      text-transform: uppercase;
+    }
+    .lang-btn:hover { color: var(--navy); border-color: var(--border); }
+    .lang-btn.active { color: var(--navy); border-color: var(--navy); background: var(--navy-light); font-weight:600; }
+    @media(max-width:768px){
+      .lang-selector { margin-left:0; padding: 1rem 0 0.5rem; justify-content:center; }
+      .lang-btn { font-size: 0.8rem; padding: 0.3rem 0.7rem; }
+    }
+  </style>
 </head>
 <body>
 
@@ -460,6 +484,13 @@
     <li><a href="#stack">Stack</a></li>
     <li><a href="#beyond">Beyond</a></li>
   </ul>
+  <div class="lang-selector" id="lang-selector">
+    <button class="lang-btn active" data-lang="en">EN</button>
+    <button class="lang-btn" data-lang="fr">FR</button>
+    <button class="lang-btn" data-lang="de">DE</button>
+    <button class="lang-btn" data-lang="it">IT</button>
+    <button class="lang-btn" data-lang="es">ES</button>
+  </div>
 </nav>
 
 <!-- HERO -->
@@ -1004,6 +1035,405 @@ document.querySelectorAll('.project-card').forEach(card => {
     card.style.transform = '';
   });
 });
+
+// ── I18N ──
+const translations = {
+  en: {
+    hero_eyebrow: "PhD Candidate · Research Engineer",
+    hero_h1: "Physics meets <em>Deep Learning</em>",
+    hero_desc: `CIFRE PhD at Paris-Saclay × STMicroelectronics —
+      <strong>surrogate models for electromagnetic simulation</strong>,
+      gradient-based inverse design of photonic metasurfaces,
+      and JEPA-based world models. Achieved
+      <strong>10<sup>6</sup>× inference acceleration</strong> in production.<br><br>
+      Dreamed of quantum computing. An Erasmus in Uppsala changed everything.`,
+    btn_github: "GitHub", btn_linkedin: "LinkedIn", btn_contact: "Contact", btn_cv: "CV ↓",
+    stat_speedup: "Inference speedup", stat_papers: "Publications",
+    stat_epochs: "I-JEPA trained", stat_years: "CIFRE PhD",
+    eyebrow_projects: "ML Portfolio", sec_projects: "Projects",
+    badge_done: "✓ Complete", badge_wip: "⟳ In progress", badge_soon: "◌ Upcoming",
+    ijepa_title: "I-JEPA",
+    ijepa_desc: "Close study reimplementation of Image Joint Embedding Predictive Architecture (Assran et al., CVPR 2023). Read the paper, implemented end-to-end, trained and analyzed results — block masking with aspect-ratio constraints, dual-encoder with EMA target, predictor with learnable mask tokens.",
+    ijepa_link: "Code coming soon",
+    lewm_title: "LeWorldModel",
+    lewm_desc: "Study reimplementation of the JEPA-based world model for robotics (arXiv 2603.19312). Reading the paper and progressively implementing — single encoder ViT, AdaLN action conditioning, SIGReg anti-collapse regularization, end-to-end gradient training without EMA.",
+    smart_title: "SmartHome-AI",
+    smart_desc: "Personal project — modular, privacy-focused smart home assistant powered by local LLMs. Multi-agent architecture routing requests between specialized agents (weather, news, calendar, home automation). Fully containerized, runs offline on a home server.",
+    smart_link: "View on GitHub →",
+    fdtd_title: "World Model for Physical Simulation",
+    fdtd_desc: "Exploring JEPA-based world models applied to electromagnetic simulation — using the LeWorldModel architecture as a foundation to learn latent dynamics of FDTD systems for metasurface inverse design. A natural bridge between the ML portfolio and the PhD research.",
+    eyebrow_exp: "Background", sec_exp: "Experience",
+    role_phd: "PhD Candidate — CIFRE", org_phd: "Paris-Saclay University × STMicroelectronics · Grenoble",
+    desc_phd: "Large-scale deep learning surrogates for FDTD electromagnetic simulation (10⁶× inference acceleration). Diffusion Schrödinger bridges for inverse design of photonic metasurfaces. Distributed training on GPU clusters via Ray on Azure.",
+    role_ai: "AI Engineer", org_ai: "STMicroelectronics · Crolles",
+    desc_ai: "Multimodal data pipelines and computer vision algorithms for automated anomaly detection in SEM images. Hardened research prototypes into production evaluation tools. Retained by the team to continue as PhD candidate.",
+    role_ta: "Teaching Assistant", org_ta: "Savoie Mont-Blanc University · Chambéry",
+    desc_ta: "Supervised Master's students in Socio-Cognitive Ergonomics of Intelligent Systems, guiding AI-focused group projects.",
+    role_intern: "Research Intern", org_intern: "Team MMG, La Timone · Marseille",
+    desc_intern: "Developed an analytical method for disease potential matching by adapting the Katz similarity measure.",
+    eyebrow_edu: "Formation", sec_edu: "Education",
+    deg_phd: "PhD in AI & Physics", deg_msc: "MSc Artificial Intelligence",
+    deg_m1: "M1 Artificial Intelligence", deg_bsc: "Bachelor in Computer Science",
+    eyebrow_research: "PhD Thesis", sec_research: "Research",
+    research_title: "Surrogate Models & Inverse Design<br>for Photonic Metasurfaces",
+    research_desc: `CIFRE PhD at Paris-Saclay × STMicroelectronics (Institut d'Optique Graduate School, 2023–2026).
+      Large-scale deep learning surrogates for FDTD electromagnetic simulation achieving 10<sup>6</sup>×
+      inference acceleration. Diffusion Schrödinger bridges for inverse design optimization.
+      Distributed training on GPU clusters via Ray on Azure.`,
+    pubs_label: "Selected Publications",
+    eyebrow_stack: "Tools & Frameworks", sec_stack: "Stack",
+    eyebrow_beyond: "The Human Behind the Research", sec_beyond: "Beyond the lab",
+    beyond_endurance_title: "Endurance",
+    beyond_endurance_desc: "Running and triathlon. Paris 2024 Olympic Games — 10km pour tous on the Champs-Élysées. First tri still on the list.",
+    beyond_rally_title: "4L Trophy — 4th place",
+    beyond_rally_desc: "6,000 km humanitarian rally across the Moroccan desert. 1,000+ teams. The hardest part: crossing oueds without getting stuck in the sand.",
+    beyond_para_title: "Paragliding",
+    beyond_para_desc: "Another way to read the physics of air. Based in Grenoble — the Alps make for a pretty good backyard.",
+    beyond_uppsala_title: "Uppsala, Sweden",
+    beyond_uppsala_desc: "An Erasmus semester that changed everything — arrived wanting to do quantum computing, left wanting to do AI. One of the best chapters of my life.",
+    nav_projects: "Projects", nav_experience: "Experience", nav_research: "Research",
+    nav_stack: "Stack", nav_beyond: "Beyond",
+    footer_loc: "Grenoble, France · 2026",
+    fdtd_caption: "Near-field electromagnetic output predicted by the surrogate model — metasurface array",
+  },
+  fr: {
+    hero_eyebrow: "Doctorant · Ingénieur de Recherche",
+    hero_h1: "La physique rencontre <em>le Deep Learning</em>",
+    hero_desc: `Thèse CIFRE à Paris-Saclay × STMicroelectronics —
+      <strong>modèles de substitution pour la simulation électromagnétique</strong>,
+      conception inverse par gradient de métasurfaces photoniques,
+      et world models JEPA. <strong>Accélération de 10<sup>6</sup>×</strong> en production.<br><br>
+      Rêvait d'informatique quantique. Un Erasmus à Uppsala a tout changé.`,
+    btn_github: "GitHub", btn_linkedin: "LinkedIn", btn_contact: "Contact", btn_cv: "CV ↓",
+    stat_speedup: "Accélération inférence", stat_papers: "Publications",
+    stat_epochs: "I-JEPA entraîné", stat_years: "Thèse CIFRE",
+    eyebrow_projects: "Portfolio ML", sec_projects: "Projets",
+    badge_done: "✓ Terminé", badge_wip: "⟳ En cours", badge_soon: "◌ À venir",
+    ijepa_title: "I-JEPA",
+    ijepa_desc: "Réimplémentation d'étude de l'Image Joint Embedding Predictive Architecture (Assran et al., CVPR 2023). Lecture du papier, implémentation de bout en bout, entraînement et analyse des résultats — masquage par blocs, double encodeur avec cible EMA, prédicteur avec tokens masqués apprenables.",
+    ijepa_link: "Code bientôt disponible",
+    lewm_title: "LeWorldModel",
+    lewm_desc: "Réimplémentation d'étude du world model JEPA pour la robotique (arXiv 2603.19312). Lecture progressive du papier et implémentation — ViT encodeur unique, conditionnement d'action AdaLN, régularisation anti-effondrement SIGReg, entraînement gradient bout en bout sans EMA.",
+    smart_title: "SmartHome-AI",
+    smart_desc: "Projet personnel — assistant domotique modulaire et respectueux de la vie privée, propulsé par des LLM locaux. Architecture multi-agents routant les requêtes entre agents spécialisés (météo, actualités, calendrier, domotique). Entièrement conteneurisé, fonctionne hors-ligne.",
+    smart_link: "Voir sur GitHub →",
+    fdtd_title: "World Model pour la Simulation Physique",
+    fdtd_desc: "Exploration des world models JEPA appliqués à la simulation électromagnétique — utilisation de l'architecture LeWorldModel pour apprendre la dynamique latente des systèmes FDTD pour la conception inverse de métasurfaces. Un pont naturel entre le portfolio ML et la thèse.",
+    eyebrow_exp: "Parcours", sec_exp: "Expérience",
+    role_phd: "Doctorant — CIFRE", org_phd: "Université Paris-Saclay × STMicroelectronics · Grenoble",
+    desc_phd: "Modèles de substitution deep learning à grande échelle pour la simulation FDTD (accélération 10⁶×). Ponts de Schrödinger par diffusion pour la conception inverse de métasurfaces photoniques. Entraînement distribué sur clusters GPU via Ray sur Azure.",
+    role_ai: "Ingénieur IA", org_ai: "STMicroelectronics · Crolles",
+    desc_ai: "Pipelines de données multimodaux et algorithmes de vision par ordinateur pour la détection automatique d'anomalies dans des images MEB. Prototypes de recherche transformés en outils de production. Retenu par l'équipe pour continuer en thèse.",
+    role_ta: "Chargé de TD", org_ta: "Université Savoie Mont-Blanc · Chambéry",
+    desc_ta: "Encadrement d'étudiants en Master en Ergonomie Socio-Cognitive des Systèmes Intelligents, guidant des projets de groupe axés sur l'IA.",
+    role_intern: "Stagiaire Recherche", org_intern: "Équipe MMG, La Timone · Marseille",
+    desc_intern: "Développement d'une méthode analytique de correspondance potentielle de maladies par adaptation de la mesure de similarité de Katz.",
+    eyebrow_edu: "Formation", sec_edu: "Formation",
+    deg_phd: "Doctorat en IA & Physique", deg_msc: "Master en Intelligence Artificielle",
+    deg_m1: "M1 Intelligence Artificielle", deg_bsc: "Licence en Informatique",
+    eyebrow_research: "Thèse de Doctorat", sec_research: "Recherche",
+    research_title: "Modèles de Substitution & Conception Inverse<br>de Métasurfaces Photoniques",
+    research_desc: `Thèse CIFRE à Paris-Saclay × STMicroelectronics (Institut d'Optique Graduate School, 2023–2026).
+      Modèles de substitution deep learning à grande échelle pour la simulation FDTD avec une accélération de 10<sup>6</sup>×.
+      Ponts de Schrödinger par diffusion pour l'optimisation de la conception inverse.
+      Entraînement distribué sur clusters GPU via Ray sur Azure.`,
+    pubs_label: "Publications Sélectionnées",
+    eyebrow_stack: "Outils & Frameworks", sec_stack: "Stack",
+    eyebrow_beyond: "L'Homme Derrière la Recherche", sec_beyond: "Au-delà du labo",
+    beyond_endurance_title: "Endurance",
+    beyond_endurance_desc: "Course à pied et triathlon. JO Paris 2024 — 10km pour tous sur les Champs-Élysées. Premier triathlon encore à venir.",
+    beyond_rally_title: "4L Trophy — 4e place",
+    beyond_rally_desc: "6 000 km de raid humanitaire à travers le désert marocain. Plus de 1 000 équipes. Le plus difficile : traverser les oueds sans s'enliser.",
+    beyond_para_title: "Parapente",
+    beyond_para_desc: "Une autre façon de lire la physique de l'air. Basé à Grenoble — les Alpes font un sacré terrain de jeu.",
+    beyond_uppsala_title: "Uppsala, Suède",
+    beyond_uppsala_desc: "Un semestre Erasmus qui a tout changé — parti pour l'informatique quantique, revenu pour l'IA. Un des meilleurs chapitres de ma vie.",
+    nav_projects: "Projets", nav_experience: "Expérience", nav_research: "Recherche",
+    nav_stack: "Stack", nav_beyond: "Au-delà",
+    footer_loc: "Grenoble, France · 2026",
+    fdtd_caption: "Sortie champ proche prédite par le modèle de substitution — réseau de métasurfaces",
+  },
+  de: {
+    hero_eyebrow: "Doktorand · Forschungsingenieur",
+    hero_h1: "Physik trifft <em>Deep Learning</em>",
+    hero_desc: `CIFRE-Doktorat an der Paris-Saclay × STMicroelectronics —
+      <strong>Surrogatmodelle für elektromagnetische Simulation</strong>,
+      gradientenbasiertes inverses Design photonischer Metaoberflächen
+      und JEPA-basierte Weltmodelle. <strong>10<sup>6</sup>×-Beschleunigung</strong> in der Produktion.<br><br>
+      Träumte von Quanteninformatik. Ein Erasmus in Uppsala änderte alles.`,
+    btn_github: "GitHub", btn_linkedin: "LinkedIn", btn_contact: "Kontakt", btn_cv: "Lebenslauf ↓",
+    stat_speedup: "Inferenzbeschleunigung", stat_papers: "Publikationen",
+    stat_epochs: "I-JEPA trainiert", stat_years: "CIFRE-Doktorat",
+    eyebrow_projects: "ML-Portfolio", sec_projects: "Projekte",
+    badge_done: "✓ Abgeschlossen", badge_wip: "⟳ In Arbeit", badge_soon: "◌ Geplant",
+    ijepa_title: "I-JEPA",
+    ijepa_desc: "Studienreimplementierung der Image Joint Embedding Predictive Architecture (Assran et al., CVPR 2023). Paper gelesen, End-to-End implementiert, trainiert und Ergebnisse analysiert — Blockmasking, Dual-Encoder mit EMA-Ziel, Prädiktor mit lernbaren Masken-Tokens.",
+    ijepa_link: "Code folgt bald",
+    lewm_title: "LeWorldModel",
+    lewm_desc: "Studienreimplementierung des JEPA-basierten Weltmodells für Robotik (arXiv 2603.19312). Schrittweise Implementierung — einzelner ViT-Encoder, AdaLN-Aktionskonditionierung, SIGReg-Anti-Kollaps-Regularisierung, End-to-End-Gradiententraining ohne EMA.",
+    smart_title: "SmartHome-AI",
+    smart_desc: "Persönliches Projekt — modularer, datenschutzorientierter Smart-Home-Assistent auf Basis lokaler LLMs. Multi-Agenten-Architektur mit spezialisierten Agenten (Wetter, Nachrichten, Kalender, Hausautomation). Vollständig containerisiert, läuft offline.",
+    smart_link: "Auf GitHub ansehen →",
+    fdtd_title: "Weltmodell für physikalische Simulation",
+    fdtd_desc: "Erforschung JEPA-basierter Weltmodelle für elektromagnetische Simulation — Einsatz der LeWorldModel-Architektur zum Erlernen latenter FDTD-Dynamiken für inverses Metaoberflächen-Design. Eine natürliche Brücke zwischen ML-Portfolio und Doktorarbeit.",
+    eyebrow_exp: "Werdegang", sec_exp: "Berufserfahrung",
+    role_phd: "Doktorand — CIFRE", org_phd: "Universität Paris-Saclay × STMicroelectronics · Grenoble",
+    desc_phd: "Großmaßstäbliche Deep-Learning-Surrogatmodelle für FDTD-Simulation (10⁶×-Beschleunigung). Diffusions-Schrödinger-Brücken für inverses Design. Verteiltes Training auf GPU-Clustern via Ray auf Azure.",
+    role_ai: "KI-Ingenieur", org_ai: "STMicroelectronics · Crolles",
+    desc_ai: "Multimodale Datenpipelines und Computer-Vision-Algorithmen zur automatischen Anomalieerkennung in REM-Bildern. Forschungsprototypen in Produktionswerkzeuge überführt. Vom Team für die Doktorarbeit übernommen.",
+    role_ta: "Lehrbeauftragter", org_ta: "Universität Savoie Mont-Blanc · Chambéry",
+    desc_ta: "Betreuung von Masterstudierenden in Sozio-Kognitiver Ergonomie Intelligenter Systeme mit KI-Fokus.",
+    role_intern: "Forschungspraktikant", org_intern: "Team MMG, La Timone · Marseille",
+    desc_intern: "Entwicklung einer analytischen Methode zum Krankheits-Matching durch Anpassung des Katz-Ähnlichkeitsmaßes.",
+    eyebrow_edu: "Ausbildung", sec_edu: "Ausbildung",
+    deg_phd: "Doktorat in KI & Physik", deg_msc: "Master Künstliche Intelligenz",
+    deg_m1: "M1 Künstliche Intelligenz", deg_bsc: "Bachelor Informatik",
+    eyebrow_research: "Doktorarbeit", sec_research: "Forschung",
+    research_title: "Surrogatmodelle & Inverses Design<br>für Photonische Metaoberflächen",
+    research_desc: `CIFRE-Doktorat an der Paris-Saclay × STMicroelectronics (2023–2026).
+      Großmaßstäbliche Deep-Learning-Surrogate für FDTD-Simulation mit 10<sup>6</sup>×-Beschleunigung.
+      Diffusions-Schrödinger-Brücken zur Inversdesign-Optimierung.
+      Verteiltes Training auf GPU-Clustern via Ray auf Azure.`,
+    pubs_label: "Ausgewählte Publikationen",
+    eyebrow_stack: "Werkzeuge & Frameworks", sec_stack: "Stack",
+    eyebrow_beyond: "Der Mensch hinter der Forschung", sec_beyond: "Jenseits des Labors",
+    beyond_endurance_title: "Ausdauer",
+    beyond_endurance_desc: "Laufen und Triathlon. Olympische Spiele Paris 2024 — 10km pour tous auf den Champs-Élysées. Erster Triathlon noch auf der Liste.",
+    beyond_rally_title: "4L Trophy — 4. Platz",
+    beyond_rally_desc: "6.000 km humanitäre Rallye durch die marokkanische Wüste. Über 1.000 Teams. Das Schwerste: Wadis überqueren ohne stecken zu bleiben.",
+    beyond_para_title: "Gleitschirmfliegen",
+    beyond_para_desc: "Eine andere Art, die Physik der Luft zu erleben. Wohnhaft in Grenoble — die Alpen sind ein großartiger Hinterhof.",
+    beyond_uppsala_title: "Uppsala, Schweden",
+    beyond_uppsala_desc: "Ein Erasmus-Semester, das alles veränderte — kam für Quanteninformatik, ging für KI. Eines der besten Kapitel meines Lebens.",
+    nav_projects: "Projekte", nav_experience: "Erfahrung", nav_research: "Forschung",
+    nav_stack: "Stack", nav_beyond: "Jenseits",
+    footer_loc: "Grenoble, Frankreich · 2026",
+    fdtd_caption: "Nahfeldausgabe des Surrogatmodells — photonisches Metaoberflächen-Array",
+  },
+  it: {
+    hero_eyebrow: "Dottorando · Ingegnere della Ricerca",
+    hero_h1: "La fisica incontra <em>il Deep Learning</em>",
+    hero_desc: `Dottorato CIFRE a Paris-Saclay × STMicroelectronics —
+      <strong>modelli surrogati per la simulazione elettromagnetica</strong>,
+      design inverso basato su gradienti di metasuperfici fotoniche
+      e world model JEPA. <strong>Accelerazione di 10<sup>6</sup>×</strong> in produzione.<br><br>
+      Sognava l'informatica quantistica. Un Erasmus a Uppsala ha cambiato tutto.`,
+    btn_github: "GitHub", btn_linkedin: "LinkedIn", btn_contact: "Contatto", btn_cv: "CV ↓",
+    stat_speedup: "Accelerazione inferenza", stat_papers: "Pubblicazioni",
+    stat_epochs: "I-JEPA addestrato", stat_years: "Dottorato CIFRE",
+    eyebrow_projects: "Portfolio ML", sec_projects: "Progetti",
+    badge_done: "✓ Completato", badge_wip: "⟳ In corso", badge_soon: "◌ In arrivo",
+    ijepa_title: "I-JEPA",
+    ijepa_desc: "Reimplementazione di studio dell'Image Joint Embedding Predictive Architecture (Assran et al., CVPR 2023). Lettura del paper, implementazione end-to-end, addestramento e analisi dei risultati — mascheratura a blocchi, doppio encoder con target EMA, predittore con token maschera apprendibili.",
+    ijepa_link: "Codice in arrivo",
+    lewm_title: "LeWorldModel",
+    lewm_desc: "Reimplementazione di studio del world model JEPA per la robotica (arXiv 2603.19312). Lettura progressiva del paper e implementazione — ViT encoder singolo, condizionamento azione AdaLN, regolarizzazione anti-collasso SIGReg, training gradient end-to-end senza EMA.",
+    smart_title: "SmartHome-AI",
+    smart_desc: "Progetto personale — assistente domotico modulare e privacy-first alimentato da LLM locali. Architettura multi-agente con agenti specializzati (meteo, notizie, calendario, domotica). Completamente containerizzato, funziona offline.",
+    smart_link: "Vedi su GitHub →",
+    fdtd_title: "World Model per la Simulazione Fisica",
+    fdtd_desc: "Esplorazione di world model JEPA applicati alla simulazione elettromagnetica — utilizzo dell'architettura LeWorldModel per apprendere la dinamica latente dei sistemi FDTD per il design inverso di metasuperfici. Un ponte naturale tra portfolio ML e dottorato.",
+    eyebrow_exp: "Percorso", sec_exp: "Esperienza",
+    role_phd: "Dottorando — CIFRE", org_phd: "Università Paris-Saclay × STMicroelectronics · Grenoble",
+    desc_phd: "Modelli surrogati deep learning su larga scala per simulazione FDTD (accelerazione 10⁶×). Ponti di Schrödinger per diffusione per il design inverso. Training distribuito su cluster GPU via Ray su Azure.",
+    role_ai: "Ingegnere IA", org_ai: "STMicroelectronics · Crolles",
+    desc_ai: "Pipeline di dati multimodali e algoritmi di visione artificiale per il rilevamento automatico di anomalie in immagini SEM. Prototipi di ricerca trasformati in strumenti di produzione. Trattenuto dal team per il dottorato.",
+    role_ta: "Assistente Didattico", org_ta: "Università Savoie Mont-Blanc · Chambéry",
+    desc_ta: "Supervisione di studenti magistrali in Ergonomia Socio-Cognitiva dei Sistemi Intelligenti, guidando progetti di gruppo orientati all'IA.",
+    role_intern: "Stagista Ricerca", org_intern: "Team MMG, La Timone · Marsiglia",
+    desc_intern: "Sviluppo di un metodo analitico per il matching di patologie adattando la misura di similarità di Katz.",
+    eyebrow_edu: "Formazione", sec_edu: "Formazione",
+    deg_phd: "Dottorato in IA & Fisica", deg_msc: "Master in Intelligenza Artificiale",
+    deg_m1: "M1 Intelligenza Artificiale", deg_bsc: "Laurea in Informatica",
+    eyebrow_research: "Tesi di Dottorato", sec_research: "Ricerca",
+    research_title: "Modelli Surrogati & Design Inverso<br>di Metasuperfici Fotoniche",
+    research_desc: `Dottorato CIFRE a Paris-Saclay × STMicroelectronics (2023–2026).
+      Modelli surrogati deep learning per simulazione FDTD con accelerazione 10<sup>6</sup>×.
+      Ponti di Schrödinger per diffusione per l'ottimizzazione del design inverso.
+      Training distribuito su cluster GPU via Ray su Azure.`,
+    pubs_label: "Pubblicazioni Selezionate",
+    eyebrow_stack: "Strumenti & Framework", sec_stack: "Stack",
+    eyebrow_beyond: "L'Uomo Dietro la Ricerca", sec_beyond: "Oltre il laboratorio",
+    beyond_endurance_title: "Resistenza",
+    beyond_endurance_desc: "Corsa e triathlon. Giochi Olimpici Parigi 2024 — 10km pour tous sugli Champs-Élysées. Primo triathlon ancora in lista.",
+    beyond_rally_title: "4L Trophy — 4° posto",
+    beyond_rally_desc: "6.000 km di rally umanitario nel deserto marocchino. Oltre 1.000 squadre. La parte più difficile: attraversare gli uadi senza insabbiarsi.",
+    beyond_para_title: "Parapendio",
+    beyond_para_desc: "Un altro modo di leggere la fisica dell'aria. Con base a Grenoble — le Alpi sono un ottimo cortile.",
+    beyond_uppsala_title: "Uppsala, Svezia",
+    beyond_uppsala_desc: "Un semestre Erasmus che ha cambiato tutto — arrivato per l'informatica quantistica, ripartito per l'IA. Uno dei migliori capitoli della mia vita.",
+    nav_projects: "Progetti", nav_experience: "Esperienza", nav_research: "Ricerca",
+    nav_stack: "Stack", nav_beyond: "Oltre",
+    footer_loc: "Grenoble, Francia · 2026",
+    fdtd_caption: "Output campo vicino previsto dal modello surrogato — array di metasuperfici",
+  },
+  es: {
+    hero_eyebrow: "Doctorando · Ingeniero de Investigación",
+    hero_h1: "La física se une al <em>Deep Learning</em>",
+    hero_desc: `Doctorado CIFRE en Paris-Saclay × STMicroelectronics —
+      <strong>modelos sustitutos para simulación electromagnética</strong>,
+      diseño inverso por gradiente de metasuperficies fotónicas
+      y modelos del mundo JEPA. <strong>Aceleración de 10<sup>6</sup>×</strong> en producción.<br><br>
+      Soñaba con computación cuántica. Un Erasmus en Uppsala lo cambió todo.`,
+    btn_github: "GitHub", btn_linkedin: "LinkedIn", btn_contact: "Contacto", btn_cv: "CV ↓",
+    stat_speedup: "Aceleración inferencia", stat_papers: "Publicaciones",
+    stat_epochs: "I-JEPA entrenado", stat_years: "Doctorado CIFRE",
+    eyebrow_projects: "Portfolio ML", sec_projects: "Proyectos",
+    badge_done: "✓ Completado", badge_wip: "⟳ En progreso", badge_soon: "◌ Próximamente",
+    ijepa_title: "I-JEPA",
+    ijepa_desc: "Reimplementación de estudio de Image Joint Embedding Predictive Architecture (Assran et al., CVPR 2023). Lectura del paper, implementación end-to-end, entrenamiento y análisis de resultados — enmascaramiento por bloques, doble encoder con objetivo EMA, predictor con tokens de máscara aprendibles.",
+    ijepa_link: "Código próximamente",
+    lewm_title: "LeWorldModel",
+    lewm_desc: "Reimplementación de estudio del world model JEPA para robótica (arXiv 2603.19312). Lectura progresiva del paper e implementación — ViT encoder único, condicionamiento de acción AdaLN, regularización anti-colapso SIGReg, entrenamiento gradient end-to-end sin EMA.",
+    smart_title: "SmartHome-AI",
+    smart_desc: "Proyecto personal — asistente domótico modular y enfocado en la privacidad, impulsado por LLM locales. Arquitectura multi-agente con agentes especializados (clima, noticias, calendario, domótica). Completamente contenedorizado, funciona sin conexión.",
+    smart_link: "Ver en GitHub →",
+    fdtd_title: "World Model para Simulación Física",
+    fdtd_desc: "Exploración de world models JEPA aplicados a simulación electromagnética — usando la arquitectura LeWorldModel para aprender dinámicas latentes de sistemas FDTD para diseño inverso de metasuperficies. Un puente natural entre el portfolio ML y la tesis doctoral.",
+    eyebrow_exp: "Trayectoria", sec_exp: "Experiencia",
+    role_phd: "Doctorando — CIFRE", org_phd: "Universidad Paris-Saclay × STMicroelectronics · Grenoble",
+    desc_phd: "Modelos sustitutos de deep learning a gran escala para simulación FDTD (aceleración 10⁶×). Puentes de Schrödinger por difusión para diseño inverso. Entrenamiento distribuido en clústeres GPU vía Ray en Azure.",
+    role_ai: "Ingeniero de IA", org_ai: "STMicroelectronics · Crolles",
+    desc_ai: "Pipelines de datos multimodales y algoritmos de visión por computador para detección automática de anomalías en imágenes SEM. Prototipos de investigación convertidos en herramientas de producción. Retenido por el equipo para el doctorado.",
+    role_ta: "Asistente Docente", org_ta: "Universidad Savoie Mont-Blanc · Chambéry",
+    desc_ta: "Supervisión de estudiantes de Máster en Ergonomía Socio-Cognitiva de Sistemas Inteligentes, guiando proyectos grupales centrados en IA.",
+    role_intern: "Pasante de Investigación", org_intern: "Equipo MMG, La Timone · Marsella",
+    desc_intern: "Desarrollo de un método analítico para el emparejamiento de enfermedades adaptando la medida de similitud de Katz.",
+    eyebrow_edu: "Formación", sec_edu: "Formación",
+    deg_phd: "Doctorado en IA & Física", deg_msc: "Máster en Inteligencia Artificial",
+    deg_m1: "M1 Inteligencia Artificial", deg_bsc: "Grado en Informática",
+    eyebrow_research: "Tesis Doctoral", sec_research: "Investigación",
+    research_title: "Modelos Sustitutos & Diseño Inverso<br>de Metasuperficies Fotónicas",
+    research_desc: `Doctorado CIFRE en Paris-Saclay × STMicroelectronics (2023–2026).
+      Modelos sustitutos de deep learning para simulación FDTD con aceleración 10<sup>6</sup>×.
+      Puentes de Schrödinger por difusión para optimización de diseño inverso.
+      Entrenamiento distribuido en clústeres GPU vía Ray en Azure.`,
+    pubs_label: "Publicaciones Seleccionadas",
+    eyebrow_stack: "Herramientas & Frameworks", sec_stack: "Stack",
+    eyebrow_beyond: "El Ser Humano Detrás de la Investigación", sec_beyond: "Más allá del laboratorio",
+    beyond_endurance_title: "Resistencia",
+    beyond_endurance_desc: "Running y triatlón. Juegos Olímpicos París 2024 — 10km pour tous en los Campos Elíseos. Primer triatlón aún pendiente.",
+    beyond_rally_title: "4L Trophy — 4.º puesto",
+    beyond_rally_desc: "6.000 km de rally humanitario por el desierto marroquí. Más de 1.000 equipos. Lo más difícil: cruzar los uadis sin quedar atascado.",
+    beyond_para_title: "Parapente",
+    beyond_para_desc: "Otra forma de leer la física del aire. Con base en Grenoble — los Alpes son un buen patio trasero.",
+    beyond_uppsala_title: "Uppsala, Suecia",
+    beyond_uppsala_desc: "Un semestre Erasmus que lo cambió todo — llegué queriendo computación cuántica, me fui queriendo IA. Uno de los mejores capítulos de mi vida.",
+    nav_projects: "Proyectos", nav_experience: "Experiencia", nav_research: "Investigación",
+    nav_stack: "Stack", nav_beyond: "Más allá",
+    footer_loc: "Grenoble, Francia · 2026",
+    fdtd_caption: "Salida de campo cercano predicha por el modelo sustituto — array de metasuperficies",
+  }
+};
+
+let currentLang = 'en';
+
+function applyLang(lang) {
+  currentLang = lang;
+  const t = translations[lang];
+  if (!t) return;
+
+  // Hero
+  document.querySelector('.hero-eyebrow').textContent = t.hero_eyebrow;
+  document.querySelector('h1').innerHTML = t.hero_h1;
+  document.querySelector('.hero-desc').innerHTML = t.hero_desc;
+
+  // Hero CTA buttons
+  const btns = document.querySelectorAll('.hero-cta .btn');
+  if (btns[0]) btns[0].childNodes[btns[0].childNodes.length-1].textContent = ' ' + t.btn_github;
+  if (btns[1]) btns[1].textContent = t.btn_linkedin;
+  if (btns[2]) btns[2].textContent = t.btn_contact;
+  if (btns[3]) btns[3].textContent = t.btn_cv;
+
+  // Stats
+  const statLabels = document.querySelectorAll('.stat-label');
+  ['stat_speedup','stat_papers','stat_epochs','stat_years'].forEach((k,i) => {
+    if (statLabels[i]) statLabels[i].textContent = t[k];
+  });
+
+  // Projects section
+  const eyebrows = document.querySelectorAll('.section-eyebrow');
+  const titles   = document.querySelectorAll('.section-title');
+  const sectionMap = [
+    ['eyebrow_projects','sec_projects'],
+    ['eyebrow_exp','sec_exp'],
+    ['eyebrow_edu','sec_edu'],
+    ['eyebrow_research','sec_research'],
+    ['eyebrow_stack','sec_stack'],
+    ['eyebrow_beyond','sec_beyond'],
+  ];
+  eyebrows.forEach((el,i) => { if (sectionMap[i]) el.textContent = t[sectionMap[i][0]] || el.textContent; });
+  titles.forEach((el,i)   => { if (sectionMap[i]) el.innerHTML  = t[sectionMap[i][1]] || el.innerHTML; });
+
+  // Badges
+  document.querySelectorAll('.badge-done').forEach(el => el.textContent = t.badge_done);
+  document.querySelectorAll('.badge-wip').forEach(el  => el.textContent = t.badge_wip);
+  document.querySelectorAll('.badge-soon').forEach(el => el.textContent = t.badge_soon);
+
+  // Project titles & descs
+  const projTitles = document.querySelectorAll('.project-title');
+  const projDescs  = document.querySelectorAll('.project-desc');
+  const projLinks  = document.querySelectorAll('.project-link');
+  const pTitleKeys = ['ijepa_title','lewm_title','smart_title','fdtd_title'];
+  const pDescKeys  = ['ijepa_desc','lewm_desc','smart_desc','fdtd_desc'];
+  projTitles.forEach((el,i) => { if (t[pTitleKeys[i]]) el.textContent = t[pTitleKeys[i]]; });
+  projDescs.forEach((el,i)  => { if (t[pDescKeys[i]])  el.textContent = t[pDescKeys[i]]; });
+  if (projLinks[0]) projLinks[0].textContent = t.ijepa_link;
+  if (projLinks[1]) projLinks[1].textContent = t.smart_link;
+
+  // Experience roles, orgs, descs
+  const roles  = document.querySelectorAll('.exp-role');
+  const orgs   = document.querySelectorAll('.exp-org');
+  const eDescs = document.querySelectorAll('.exp-desc');
+  const roleKeys  = ['role_phd','role_ai','role_ta','role_intern'];
+  const orgKeys   = ['org_phd','org_ai','org_ta','org_intern'];
+  const edescKeys = ['desc_phd','desc_ai','desc_ta','desc_intern'];
+  roles.forEach((el,i)  => { if (t[roleKeys[i]])  el.textContent = t[roleKeys[i]]; });
+  orgs.forEach((el,i)   => { if (t[orgKeys[i]])   el.textContent = t[orgKeys[i]]; });
+  eDescs.forEach((el,i) => { if (t[edescKeys[i]]) el.textContent = t[edescKeys[i]]; });
+
+  // Education degrees
+  const degrees = document.querySelectorAll('.edu-degree');
+  const degKeys = ['deg_phd','deg_msc','deg_m1','deg_bsc','deg_bsc'];
+  degrees.forEach((el,i) => { if (t[degKeys[i]]) el.textContent = t[degKeys[i]]; });
+
+  // Research section
+  document.querySelector('.research-title').innerHTML = t.research_title;
+  document.querySelector('.research-desc').innerHTML  = t.research_desc;
+  document.querySelector('.pubs-label').textContent   = t.pubs_label;
+
+  // FDTD caption
+  const fdtdCap = document.querySelector('.fdtd-caption');
+  if (fdtdCap) fdtdCap.textContent = t.fdtd_caption;
+
+  // Beyond
+  const beyondTitles = document.querySelectorAll('.beyond-title');
+  const beyondDescs  = document.querySelectorAll('.beyond-desc');
+  const bTitleKeys = ['beyond_endurance_title','beyond_rally_title','beyond_para_title','beyond_uppsala_title'];
+  const bDescKeys  = ['beyond_endurance_desc','beyond_rally_desc','beyond_para_desc','beyond_uppsala_desc'];
+  beyondTitles.forEach((el,i) => { if (t[bTitleKeys[i]]) el.textContent = t[bTitleKeys[i]]; });
+  beyondDescs.forEach((el,i)  => { if (t[bDescKeys[i]])  el.textContent = t[bDescKeys[i]]; });
+
+  // Nav links
+  const navLinks = document.querySelectorAll('.nav-links a');
+  const navKeys = ['nav_projects','nav_experience','nav_research','nav_stack','nav_beyond'];
+  navLinks.forEach((el,i) => { if (t[navKeys[i]]) el.textContent = t[navKeys[i]]; });
+
+  // Footer
+  document.querySelector('.footer-left').innerHTML = '<strong>Loumi Tremas</strong> · ' + t.footer_loc;
+
+  // Active button
+  document.querySelectorAll('.lang-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.lang === lang);
+  });
+  document.documentElement.lang = lang;
+}
+
+// Init listeners
+document.querySelectorAll('.lang-btn').forEach(btn => {
+  btn.addEventListener('click', () => applyLang(btn.dataset.lang));
+});
+
 </script>
 
 </body>
