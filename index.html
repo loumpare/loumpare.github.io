@@ -62,10 +62,11 @@
       display: flex; align-items: center;
       position: relative; overflow: hidden;
       padding: 8rem 4rem 5rem;
+      background: linear-gradient(135deg, rgba(15,45,82,0.04) 0%, rgba(200,135,58,0.03) 100%);
     }
     #wave-canvas {
       position: absolute; inset:0; width:100%; height:100%;
-      opacity: 0.18; pointer-events:none;
+      opacity: 0.55; pointer-events:none;
     }
     .hero-content { position:relative; z-index:1; max-width:680px; }
     .hero-eyebrow {
@@ -423,8 +424,7 @@
     <p class="hero-desc">
       CIFRE PhD at Paris-Saclay × STMicroelectronics —
       <strong>surrogate models for electromagnetic simulation</strong>,
-      gradient-based inverse design of photonic metasurfaces,
-      and JEPA-based world models. Achieved
+      gradient-based inverse design of photonic metasurfaces. Achieved
       <strong>10<sup>6</sup>× inference acceleration</strong> in production.<br><br>
       Dreamed of quantum computing. An Erasmus in Uppsala changed everything.
     </p>
@@ -861,20 +861,24 @@
 
     for (let i = 1; i <= lines; i++) {
       const y0 = i * spacing;
-      const amp = 18 * Math.sin(i * 0.4 + t * 0.3);
+      const amp = 22 * Math.sin(i * 0.4 + t * 0.3);
       const freq = 0.018 + i * 0.001;
       const phase = t * 0.6 + i * 0.5;
 
       ctx.beginPath();
       ctx.moveTo(0, y0);
-      for (let x = 0; x <= W; x += 4) {
-        const envelope = Math.exp(-0.5 * Math.pow((x - W * 0.5) / (W * 0.28), 2));
+      for (let x = 0; x <= W; x += 3) {
+        const envelope = Math.exp(-0.5 * Math.pow((x - W * 0.5) / (W * 0.32), 2));
         const y = y0 + amp * envelope * Math.sin(freq * x - phase);
         ctx.lineTo(x, y);
       }
-      const alpha = 0.12 + 0.08 * Math.abs(Math.sin(i * 0.3));
-      ctx.strokeStyle = `rgba(15,45,82,${alpha})`;
-      ctx.lineWidth = 1;
+      // Alternate between navy and amber for visibility
+      const alpha = 0.18 + 0.14 * Math.abs(Math.sin(i * 0.3));
+      const isAmber = i % 5 === 0;
+      ctx.strokeStyle = isAmber
+        ? `rgba(200,135,58,${alpha * 0.8})`
+        : `rgba(15,45,82,${alpha})`;
+      ctx.lineWidth = isAmber ? 1.5 : 1;
       ctx.stroke();
     }
     t += 0.04;
