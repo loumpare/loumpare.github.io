@@ -8,14 +8,14 @@
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg: #0e0e16;
-      --surface: #16161f;
-      --border: #252535;
-      --accent: #9080ff;
-      --accent2: #4fd1a5;
-      --text: #f0f0f8;
-      --muted: #9898b0;
-      --dim: #4a4a65;
+      --bg: #f2f2f0;
+      --surface: #ffffff;
+      --border: #ddddd8;
+      --accent: #1a3a5c;
+      --accent2: #2e7d6b;
+      --text: #1a1a2e;
+      --muted: #5a5a72;
+      --dim: #a0a0b8;
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -29,17 +29,6 @@
       font-size: 15px;
       line-height: 1.7;
       overflow-x: hidden;
-    }
-
-    /* ── Grid noise overlay ── */
-    body::before {
-      content: '';
-      position: fixed;
-      inset: 0;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
-      pointer-events: none;
-      z-index: 0;
-      opacity: 0.4;
     }
 
     /* ── Layout ── */
@@ -159,7 +148,7 @@
     }
 
     .btn-primary:hover {
-      background: #9585fa;
+      background: #254d7a;
       transform: translateY(-1px);
     }
 
@@ -260,9 +249,9 @@
       flex-shrink: 0;
     }
 
-    .badge-done { background: rgba(124,106,247,0.15); color: var(--accent); }
-    .badge-wip  { background: rgba(79,209,165,0.15);  color: var(--accent2); }
-    .badge-soon { background: rgba(58,58,80,0.5);      color: var(--muted); }
+    .badge-done { background: rgba(26,58,92,0.1);  color: var(--accent); }
+    .badge-wip  { background: rgba(46,125,107,0.1); color: var(--accent2); }
+    .badge-soon { background: rgba(160,160,184,0.2); color: var(--muted); }
 
     .project-desc {
       color: var(--muted);
@@ -297,8 +286,8 @@
     .tag {
       font-size: 0.68rem;
       padding: 0.15rem 0.5rem;
-      background: rgba(255,255,255,0.04);
-      border: 1px solid var(--border);
+      background: rgba(26,58,92,0.07);
+      border: 1px solid rgba(26,58,92,0.15);
       border-radius: 3px;
       color: var(--muted);
     }
@@ -389,6 +378,46 @@
       flex-shrink: 0;
     }
 
+    /* ── Beyond ── */
+    .beyond-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .beyond-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 1.4rem 1.6rem;
+      display: flex;
+      gap: 1.2rem;
+      align-items: flex-start;
+      transition: border-color 0.2s;
+    }
+
+    .beyond-card:hover { border-color: var(--dim); }
+
+    .beyond-icon {
+      font-size: 1.1rem;
+      color: var(--accent);
+      flex-shrink: 0;
+      margin-top: 0.1rem;
+    }
+
+    .beyond-title {
+      font-size: 0.85rem;
+      color: var(--text);
+      margin-bottom: 0.3rem;
+      font-weight: 500;
+    }
+
+    .beyond-desc {
+      font-size: 0.78rem;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+
     /* ── Footer ── */
     footer {
       padding: 2.5rem 0;
@@ -443,6 +472,7 @@
       z-index: 9999;
       transition: transform 0.1s;
       transform: translate(-50%, -50%);
+      opacity: 0.5;
     }
 
     @media (max-width: 600px) {
@@ -465,6 +495,7 @@
       <li><a href="#projects">projects</a></li>
       <li><a href="#research">research</a></li>
       <li><a href="#stack">stack</a></li>
+      <li><a href="#beyond">beyond</a></li>
     </ul>
   </nav>
 
@@ -476,6 +507,9 @@
       PhD @Paris-Saclay × STMicroelectronics — surrogate models for FDTD simulation,
       gradient-based inverse design of photonic metasurfaces, diffusion Schrödinger bridges,
       and JEPA-based world models. 10<sup>6</sup>× inference acceleration in production.
+      <br><br>
+      Started in quantum computing, pivoted to AI after an Erasmus at Uppsala Universitet —
+      and never looked back.
     </p>
     <div class="hero-links">
       <a href="https://github.com/loumpare" class="btn btn-primary" target="_blank">
@@ -503,8 +537,9 @@
           <span class="badge badge-done">✓ complete</span>
         </div>
         <p class="project-desc">
-          From-scratch reimplementation of Image Joint Embedding Predictive Architecture (Assran et al., CVPR 2023).
-          Block masking with aspect-ratio constraints, dual-encoder with EMA target, predictor with learnable mask tokens.
+          Close study reimplementation of Image Joint Embedding Predictive Architecture (Assran et al., CVPR 2023).
+          Read the paper, implemented end-to-end, trained and analyzed results — block masking with aspect-ratio
+          constraints, dual-encoder with EMA target, predictor with learnable mask tokens.
         </p>
         <div class="project-meta">
           <span class="meta-item">Dataset <strong>STL-10 unlabeled</strong></span>
@@ -519,9 +554,7 @@
           <span class="tag">PyTorch</span>
           <span class="tag">JEPA</span>
         </div>
-        <a href="https://github.com/loumpare" class="project-link" target="_blank">
-          View on GitHub →
-        </a>
+        <span class="project-link" style="opacity:0.4; cursor:default;">Code coming soon</span>
       </div>
 
       <!-- LeWorldModel -->
@@ -531,8 +564,9 @@
           <span class="badge badge-wip">in progress</span>
         </div>
         <p class="project-desc">
-          Reimplementation of the JEPA-based world model for robotics (arXiv 2603.19312).
-          Single encoder ViT, AdaLN action conditioning, SIGReg anti-collapse regularization — end-to-end gradient training without EMA.
+          Study reimplementation of the JEPA-based world model for robotics (arXiv 2603.19312).
+          Reading the paper and progressively implementing — single encoder ViT, AdaLN action conditioning,
+          SIGReg anti-collapse regularization, end-to-end gradient training without EMA target.
         </p>
         <div class="project-meta">
           <span class="meta-item">Dataset <strong>facebook/jepa-wms pusht</strong></span>
@@ -547,21 +581,51 @@
         </div>
       </div>
 
-      <!-- Kaggle -->
+      <!-- SmartHome-AI -->
+      <div class="project-card">
+        <div class="project-header">
+          <span class="project-title">SmartHome-AI</span>
+          <span class="badge badge-done">✓ complete</span>
+        </div>
+        <p class="project-desc">
+          Personal project — modular, privacy-focused smart home assistant powered by local LLMs.
+          Multi-agent architecture routing requests between specialized agents (weather, news, calendar, home automation).
+          Fully containerized with Docker, runs offline on a home server.
+        </p>
+        <div class="project-meta">
+          <span class="meta-item">Stack <strong>FastAPI · Streamlit · Docker</strong></span>
+          <span class="meta-item">LLM <strong>Local (Ollama/LM Studio)</strong></span>
+        </div>
+        <div class="project-tags">
+          <span class="tag">Multi-Agent</span>
+          <span class="tag">LLM</span>
+          <span class="tag">FastAPI</span>
+          <span class="tag">Docker</span>
+          <span class="tag">Privacy-First</span>
+        </div>
+        <a href="https://github.com/loumpare/SmartHome-AI" class="project-link" target="_blank">
+          View on GitHub →
+        </a>
+      </div>
+
+      <!-- FDTD World Model -->
       <div class="project-card soon">
         <div class="project-header">
-          <span class="project-title">Histopathologic Cancer Detection</span>
+          <span class="project-title">World Model for Physical Simulation</span>
           <span class="badge badge-soon">upcoming</span>
         </div>
         <p class="project-desc">
-          Kaggle competition — SSL pretraining (JEPA-based) as methodological backbone for cancer detection
-          in histopathology patches. Portfolio capstone bridging self-supervised learning and medical imaging.
+          Exploring JEPA-based world models applied to electromagnetic simulation —
+          using the LeWorldModel architecture as a foundation to learn latent dynamics
+          of FDTD systems for metasurface inverse design.
+          A natural bridge between the ML portfolio and the PhD research.
         </p>
         <div class="project-tags">
-          <span class="tag">Medical Imaging</span>
-          <span class="tag">SSL Pretraining</span>
-          <span class="tag">Kaggle</span>
-          <span class="tag">Transfer Learning</span>
+          <span class="tag">World Model</span>
+          <span class="tag">FDTD</span>
+          <span class="tag">Metasurfaces</span>
+          <span class="tag">JEPA</span>
+          <span class="tag">Inverse Design</span>
         </div>
       </div>
 
@@ -603,12 +667,12 @@
           <span class="pub-title">Enhanced posterior sampling via diffusion models for efficient metasurfaces inverse design</span>
         </div>
         <div class="pub-item">
-          <span class="pub-venue">SISPAD 2024–2025</span>
-          <span class="pub-title">Heuristic-Initialized Gradient Descent for Inverse Design of Large-Scale Metasurfaces</span>
+          <span class="pub-venue">SISPAD 2025</span>
+          <span class="pub-title">Inverse design of optical metasurface for CMOS imagers: a multi-objective optimization approach</span>
         </div>
         <div class="pub-item">
-          <span class="pub-venue">SISPAD 2024–2025</span>
-          <span class="pub-title">Inverse Design of Optical Metasurface for CMOS Imagers: Multi-Objective Approach</span>
+          <span class="pub-venue">SISPAD 2024</span>
+          <span class="pub-title">Approaches to simulating meta-surfaces for flat optical devices: the transition to solutions based on neural networks</span>
         </div>
         <div class="pub-item">
           <span class="pub-venue">META 2026 — Dublin</span>
@@ -616,7 +680,11 @@
         </div>
         <div class="pub-item">
           <span class="pub-venue">META 2024 — Toyama</span>
-          <span class="pub-title">Impact of numerical simulation boundary-decomposition errors</span>
+          <span class="pub-title">Impact of numerical simulation boundary-decomposition errors on optical performance of metadiffusors</span>
+        </div>
+        <div class="pub-item">
+          <span class="pub-venue">META 2023</span>
+          <span class="pub-title">Statistical study of the non-periodicity effect on metasurface over transmission and phase</span>
         </div>
       </div>
     </div>
@@ -640,6 +708,59 @@
       <div class="stack-item"><span class="stack-dot"></span>Computer Vision</div>
       <div class="stack-item"><span class="stack-dot"></span>FDTD</div>
       <div class="stack-item"><span class="stack-dot"></span>RTX 3090</div>
+    </div>
+  </section>
+
+  <!-- Beyond the lab -->
+  <section id="beyond">
+    <div class="section-label">
+      Beyond the lab <span>// the human behind the research</span>
+    </div>
+    <div class="beyond-grid">
+
+      <div class="beyond-card">
+        <div class="beyond-icon">◎</div>
+        <div class="beyond-content">
+          <div class="beyond-title">Endurance</div>
+          <p class="beyond-desc">
+            Marathon in 3:38, semi in 1:39, tour du Lac Léman in 8h.
+            Currently rebuilding after an injury — first triathlon still on the list.
+          </p>
+        </div>
+      </div>
+
+      <div class="beyond-card">
+        <div class="beyond-icon">△</div>
+        <div class="beyond-content">
+          <div class="beyond-title">Paragliding</div>
+          <p class="beyond-desc">
+            Another way to push limits — based in Grenoble, the Alps make for a pretty good backyard.
+          </p>
+        </div>
+      </div>
+
+      <div class="beyond-card">
+        <div class="beyond-icon">◈</div>
+        <div class="beyond-content">
+          <div class="beyond-title">4L Trophy — 4th place</div>
+          <p class="beyond-desc">
+            6,000 km humanitarian rally across the Moroccan desert. 1,000+ teams.
+            The hardest part: crossing oueds without getting stuck in the sand.
+          </p>
+        </div>
+      </div>
+
+      <div class="beyond-card">
+        <div class="beyond-icon">◑</div>
+        <div class="beyond-content">
+          <div class="beyond-title">Uppsala, Sweden</div>
+          <p class="beyond-desc">
+            An Erasmus semester that changed everything — arrived wanting to do quantum computing,
+            left wanting to do AI. One of the best chapters of my life.
+          </p>
+        </div>
+      </div>
+
     </div>
   </section>
 
