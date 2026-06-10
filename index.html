@@ -5,515 +5,372 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Loumi Tremas — Research Engineer</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg: #f2f2f0;
+      --bg:      #f5f5f2;
       --surface: #ffffff;
-      --border: #ddddd8;
-      --accent: #1a3a5c;
-      --accent2: #2e7d6b;
-      --text: #1a1a2e;
-      --muted: #5a5a72;
-      --dim: #a0a0b8;
+      --border:  #e5e5e0;
+      --navy:    #0f2d52;
+      --amber:   #c8873a;
+      --text:    #111827;
+      --muted:   #6b7280;
+      --dim:     #b0b0b8;
+      --navy-light: rgba(15,45,82,0.08);
     }
-
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
     html { scroll-behavior: smooth; }
 
     body {
       background: var(--bg);
       color: var(--text);
-      font-family: 'DM Mono', monospace;
+      font-family: 'Inter', sans-serif;
       font-size: 15px;
       line-height: 1.7;
       overflow-x: hidden;
     }
 
-    /* ── Layout ── */
-    .container {
-      max-width: 720px;
-      margin: 0 auto;
-      padding: 0 2rem;
-      position: relative;
-      z-index: 1;
-    }
-
-    /* ── Nav ── */
+    /* ── NAV ── */
     nav {
-      padding: 2rem 0 1.5rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      border-bottom: 1px solid var(--border);
+      position: fixed; top:0; left:0; right:0; z-index:100;
+      display: flex; justify-content: space-between; align-items: center;
+      padding: 1.2rem 4rem;
+      transition: background 0.3s, box-shadow 0.3s;
     }
-
+    nav.scrolled {
+      background: rgba(245,245,242,0.88);
+      backdrop-filter: blur(12px);
+      box-shadow: 0 1px 0 var(--border);
+    }
     .nav-logo {
-      font-family: 'Instrument Serif', serif;
-      font-size: 1.1rem;
-      color: var(--text);
+      font-family: 'Playfair Display', serif;
+      font-size: 1.05rem;
+      color: var(--navy);
       text-decoration: none;
       letter-spacing: 0.02em;
     }
-
-    .nav-links {
-      display: flex;
-      gap: 2rem;
-      list-style: none;
-    }
-
+    .nav-links { display:flex; gap:2.5rem; list-style:none; }
     .nav-links a {
-      color: var(--muted);
-      text-decoration: none;
-      font-size: 0.75rem;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      transition: color 0.2s;
+      font-size: 0.72rem; letter-spacing:0.14em; text-transform:uppercase;
+      color: var(--muted); text-decoration:none; transition:color 0.2s;
     }
+    .nav-links a:hover { color: var(--navy); }
 
-    .nav-links a:hover { color: var(--text); }
-
-    /* ── Hero ── */
+    /* ── HERO ── */
     .hero {
-      padding: 5rem 0 3.5rem;
-      position: relative;
+      min-height: 100vh;
+      display: flex; align-items: center;
+      position: relative; overflow: hidden;
+      padding: 8rem 4rem 5rem;
     }
-
-    .hero-label {
-      font-size: 0.7rem;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--accent);
-      margin-bottom: 1.5rem;
-      display: flex;
-      align-items: center;
-      gap: 0.6rem;
+    #wave-canvas {
+      position: absolute; inset:0; width:100%; height:100%;
+      opacity: 0.18; pointer-events:none;
     }
-
-    .hero-label::before {
-      content: '';
-      display: inline-block;
-      width: 20px;
-      height: 1px;
-      background: var(--accent);
+    .hero-content { position:relative; z-index:1; max-width:680px; }
+    .hero-eyebrow {
+      font-family:'JetBrains Mono', monospace;
+      font-size:0.72rem; letter-spacing:0.2em; text-transform:uppercase;
+      color: var(--amber); margin-bottom:1.6rem;
+      display:flex; align-items:center; gap:0.8rem;
     }
-
+    .hero-eyebrow::before {
+      content:''; display:inline-block;
+      width:28px; height:1px; background:var(--amber);
+    }
     h1 {
-      font-family: 'Instrument Serif', serif;
-      font-size: clamp(2.4rem, 6vw, 3.8rem);
-      line-height: 1.1;
-      letter-spacing: -0.01em;
-      color: var(--text);
-      margin-bottom: 1.5rem;
+      font-family:'Playfair Display', serif;
+      font-size: clamp(3rem,7vw,5.2rem);
+      line-height: 1.05; letter-spacing:-0.02em;
+      color: var(--navy); margin-bottom:1.8rem;
     }
-
-    h1 em {
-      font-style: italic;
-      color: var(--accent);
-    }
-
+    h1 em { font-style:italic; color:var(--amber); }
     .hero-desc {
-      color: var(--muted);
-      font-size: 0.85rem;
-      max-width: 480px;
-      line-height: 1.8;
-      margin-bottom: 2.5rem;
+      font-size:1rem; color:var(--muted); line-height:1.85;
+      max-width:520px; margin-bottom:2.8rem;
     }
-
-    .hero-links {
-      display: flex;
-      gap: 1rem;
-      flex-wrap: wrap;
-    }
-
+    .hero-desc strong { color:var(--text); font-weight:500; }
+    .hero-cta { display:flex; gap:1rem; flex-wrap:wrap; }
     .btn {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.5rem;
-      padding: 0.55rem 1.2rem;
-      border-radius: 4px;
-      font-family: 'DM Mono', monospace;
-      font-size: 0.75rem;
-      letter-spacing: 0.06em;
-      text-decoration: none;
-      transition: all 0.2s;
-      cursor: pointer;
-      border: none;
+      display:inline-flex; align-items:center; gap:0.5rem;
+      padding:0.7rem 1.5rem; border-radius:3px;
+      font-family:'Inter', sans-serif; font-size:0.78rem;
+      letter-spacing:0.06em; text-decoration:none;
+      transition:all 0.2s; cursor:pointer; border:none;
     }
+    .btn-primary { background:var(--navy); color:#fff; }
+    .btn-primary:hover { background:#1a4a7a; transform:translateY(-2px); box-shadow:0 6px 20px rgba(15,45,82,0.25); }
+    .btn-ghost { background:transparent; color:var(--navy); border:1.5px solid var(--navy); }
+    .btn-ghost:hover { background:var(--navy-light); }
 
-    .btn-primary {
-      background: var(--accent);
-      color: #fff;
-    }
-
-    .btn-primary:hover {
-      background: #254d7a;
-      transform: translateY(-1px);
-    }
-
-    .btn-ghost {
-      background: transparent;
-      color: var(--muted);
-      border: 1px solid var(--border);
-    }
-
-    .btn-ghost:hover {
-      border-color: var(--dim);
-      color: var(--text);
-    }
-
-    /* ── Section ── */
-    section {
-      padding: 4rem 0;
-      border-top: 1px solid var(--border);
-    }
-
-    .section-label {
-      font-size: 0.7rem;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
-      color: var(--muted);
-      margin-bottom: 2.5rem;
-      display: flex;
-      align-items: center;
-      gap: 0.6rem;
-    }
-
-    .section-label span {
-      color: var(--dim);
-    }
-
-    /* ── Projects ── */
-    .projects { display: flex; flex-direction: column; gap: 1px; }
-
-    .project-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 6px;
-      padding: 1.6rem;
-      margin-bottom: 1rem;
-      transition: border-color 0.2s, transform 0.2s;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .project-card::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0;
-      width: 3px; height: 100%;
-      background: var(--accent);
-      opacity: 0;
-      transition: opacity 0.2s;
-    }
-
-    .project-card:hover {
-      border-color: var(--dim);
-      transform: translateX(3px);
-    }
-
-    .project-card:hover::before { opacity: 1; }
-
-    .project-card.in-progress::before {
-      background: var(--accent2);
-      opacity: 1;
-    }
-
-    .project-card.soon::before {
-      background: var(--dim);
-      opacity: 1;
-    }
-
-    .project-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-start;
-      margin-bottom: 0.7rem;
-      gap: 1rem;
-    }
-
-    .project-title {
-      font-family: 'Instrument Serif', serif;
-      font-size: 1.15rem;
-      color: var(--text);
-    }
-
-    .badge {
-      font-size: 0.65rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      padding: 0.2rem 0.6rem;
-      border-radius: 3px;
-      white-space: nowrap;
-      flex-shrink: 0;
-    }
-
-    .badge-done { background: rgba(26,58,92,0.1);  color: var(--accent); }
-    .badge-wip  { background: rgba(46,125,107,0.1); color: var(--accent2); }
-    .badge-soon { background: rgba(160,160,184,0.2); color: var(--muted); }
-
-    .project-desc {
-      color: var(--muted);
-      font-size: 0.8rem;
-      line-height: 1.75;
-      margin-bottom: 1rem;
-    }
-
-    .project-meta {
-      display: flex;
-      gap: 1.2rem;
-      flex-wrap: wrap;
-      margin-bottom: 1rem;
-    }
-
-    .meta-item {
-      font-size: 0.72rem;
-      color: var(--dim);
-      display: flex;
-      align-items: center;
-      gap: 0.3rem;
-    }
-
-    .meta-item strong { color: var(--muted); }
-
-    .project-tags {
-      display: flex;
-      gap: 0.4rem;
-      flex-wrap: wrap;
-    }
-
-    .tag {
-      font-size: 0.68rem;
-      padding: 0.15rem 0.5rem;
-      background: rgba(26,58,92,0.07);
-      border: 1px solid rgba(26,58,92,0.15);
-      border-radius: 3px;
-      color: var(--muted);
-    }
-
-    .project-link {
-      display: inline-flex;
-      align-items: center;
-      gap: 0.3rem;
-      margin-top: 1rem;
-      font-size: 0.72rem;
-      color: var(--accent);
-      text-decoration: none;
-      opacity: 0.8;
-      transition: opacity 0.15s;
-    }
-
-    .project-link:hover { opacity: 1; }
-
-    /* ── Research ── */
-    .research-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 6px;
-      padding: 1.6rem;
-    }
-
-    .research-title {
-      font-family: 'Instrument Serif', serif;
-      font-size: 1rem;
-      color: var(--text);
-      margin-bottom: 0.5rem;
-    }
-
-    .research-desc {
-      color: var(--muted);
-      font-size: 0.8rem;
-      line-height: 1.75;
-      margin-bottom: 1rem;
-    }
-
-    .research-keywords {
-      display: flex;
-      gap: 0.4rem;
-      flex-wrap: wrap;
-    }
-
-    .pub-item {
-      display: flex;
-      flex-direction: column;
-      gap: 0.1rem;
-    }
-
-    .pub-venue {
-      font-size: 0.68rem;
-      color: var(--accent);
-      letter-spacing: 0.06em;
-    }
-
-    .pub-title {
-      font-size: 0.8rem;
-      color: var(--muted);
-      line-height: 1.5;
-    }
-
-    /* ── Stack ── */
-    .stack-grid {
+    /* ── STATS BAR ── */
+    .stats-bar {
+      background: var(--navy);
+      padding: 2rem 4rem;
       display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-      gap: 0.5rem;
+      grid-template-columns: repeat(4,1fr);
+      gap: 1rem;
+    }
+    .stat-item { text-align:center; }
+    .stat-number {
+      font-family:'Playfair Display',serif;
+      font-size:2rem; color:#fff;
+      display:block; line-height:1;
+    }
+    .stat-label {
+      font-family:'JetBrains Mono',monospace;
+      font-size:0.65rem; color:rgba(255,255,255,0.5);
+      letter-spacing:0.14em; text-transform:uppercase;
+      margin-top:0.3rem; display:block;
     }
 
+    /* ── SECTION ── */
+    .section { padding: 6rem 4rem; }
+    .section-inner { max-width: 900px; margin:0 auto; }
+    .section-header { margin-bottom:3.5rem; }
+    .section-eyebrow {
+      font-family:'JetBrains Mono',monospace;
+      font-size:0.68rem; letter-spacing:0.2em; text-transform:uppercase;
+      color:var(--amber); margin-bottom:0.8rem;
+      display:flex; align-items:center; gap:0.7rem;
+    }
+    .section-eyebrow::before {
+      content:''; display:inline-block;
+      width:20px; height:1px; background:var(--amber);
+    }
+    .section-title {
+      font-family:'Playfair Display',serif;
+      font-size:clamp(1.8rem,4vw,2.8rem);
+      color:var(--navy); line-height:1.15;
+    }
+
+    /* ── PROJECTS ── */
+    .projects-grid { display:flex; flex-direction:column; gap:1.5rem; }
+    .project-card {
+      background:var(--surface);
+      border:1px solid var(--border);
+      border-radius:8px; padding:2rem;
+      display:grid; grid-template-columns:1fr auto;
+      gap:1.5rem; align-items:start;
+      transition:transform 0.25s, box-shadow 0.25s;
+      transform-style:preserve-3d;
+      will-change:transform;
+    }
+    .project-card:hover {
+      box-shadow: 0 16px 40px rgba(15,45,82,0.1);
+    }
+    .project-card-left { grid-column:1; }
+    .project-card-right { grid-column:2; text-align:right; }
+    .project-badge {
+      display:inline-flex; align-items:center; gap:0.3rem;
+      font-family:'JetBrains Mono',monospace;
+      font-size:0.65rem; letter-spacing:0.1em; text-transform:uppercase;
+      padding:0.25rem 0.7rem; border-radius:2px; margin-bottom:1rem;
+    }
+    .badge-done  { background:rgba(15,45,82,0.08);   color:var(--navy); }
+    .badge-wip   { background:rgba(200,135,58,0.12);  color:var(--amber); }
+    .badge-soon  { background:rgba(107,114,128,0.1);  color:var(--muted); }
+    .project-title {
+      font-family:'Playfair Display',serif;
+      font-size:1.4rem; color:var(--navy);
+      margin-bottom:0.6rem; line-height:1.2;
+    }
+    .project-desc {
+      color:var(--muted); font-size:0.85rem;
+      line-height:1.8; margin-bottom:1.2rem; max-width:560px;
+    }
+    .project-meta {
+      display:flex; gap:1.5rem; flex-wrap:wrap; margin-bottom:1.2rem;
+    }
+    .meta-item {
+      font-family:'JetBrains Mono',monospace;
+      font-size:0.7rem; color:var(--dim);
+    }
+    .meta-item strong { color:var(--text); }
+    .project-tags { display:flex; gap:0.4rem; flex-wrap:wrap; }
+    .tag {
+      font-size:0.68rem; padding:0.2rem 0.6rem;
+      background:var(--navy-light);
+      border:1px solid rgba(15,45,82,0.12);
+      border-radius:2px; color:var(--navy);
+    }
+    .project-link {
+      display:inline-flex; align-items:center; gap:0.3rem;
+      margin-top:1.2rem; font-size:0.75rem;
+      color:var(--navy); text-decoration:none; font-weight:500;
+      border-bottom:1px solid transparent;
+      transition:border-color 0.2s;
+    }
+    .project-link:hover { border-color:var(--navy); }
+    .project-number {
+      font-family:'Playfair Display',serif;
+      font-size:4rem; color:var(--border);
+      line-height:1; font-weight:700;
+      user-select:none;
+    }
+
+    /* ── RESEARCH ── */
+    .research-card {
+      background:var(--navy);
+      border-radius:8px; padding:2.5rem;
+      color:#fff;
+    }
+    .research-title {
+      font-family:'Playfair Display',serif;
+      font-size:1.5rem; margin-bottom:1rem;
+      line-height:1.3;
+    }
+    .research-desc {
+      color:rgba(255,255,255,0.65);
+      font-size:0.88rem; line-height:1.85; margin-bottom:1.5rem;
+    }
+    .research-keywords { display:flex; gap:0.4rem; flex-wrap:wrap; margin-bottom:2rem; }
+    .tag-light {
+      font-size:0.68rem; padding:0.2rem 0.6rem;
+      background:rgba(255,255,255,0.1);
+      border:1px solid rgba(255,255,255,0.2);
+      border-radius:2px; color:rgba(255,255,255,0.8);
+    }
+    .pubs-label {
+      font-family:'JetBrains Mono',monospace;
+      font-size:0.65rem; letter-spacing:0.18em; text-transform:uppercase;
+      color:var(--amber); margin-bottom:1.2rem; display:block;
+    }
+    .pub-list { display:flex; flex-direction:column; gap:1rem; }
+    .pub-item { display:flex; gap:1.2rem; align-items:baseline; }
+    .pub-year {
+      font-family:'JetBrains Mono',monospace;
+      font-size:0.68rem; color:var(--amber);
+      min-width:36px; flex-shrink:0;
+    }
+    .pub-venue {
+      font-family:'JetBrains Mono',monospace;
+      font-size:0.68rem; color:rgba(255,255,255,0.4);
+      min-width:140px; flex-shrink:0;
+    }
+    .pub-title {
+      font-size:0.82rem; color:rgba(255,255,255,0.75);
+      line-height:1.5;
+    }
+
+    /* ── STACK ── */
+    .stack-grid {
+      display:grid;
+      grid-template-columns:repeat(auto-fill,minmax(150px,1fr));
+      gap:0.6rem;
+    }
     .stack-item {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 4px;
-      padding: 0.5rem 0.8rem;
-      font-size: 0.75rem;
-      color: var(--muted);
-      display: flex;
-      align-items: center;
-      gap: 0.5rem;
+      background:var(--surface);
+      border:1px solid var(--border);
+      border-radius:4px; padding:0.7rem 1rem;
+      font-family:'JetBrains Mono',monospace;
+      font-size:0.75rem; color:var(--muted);
+      display:flex; align-items:center; gap:0.6rem;
+      transition:border-color 0.2s, color 0.2s;
     }
-
+    .stack-item:hover { border-color:var(--navy); color:var(--navy); }
     .stack-dot {
-      width: 5px; height: 5px;
-      border-radius: 50%;
-      background: var(--accent);
-      flex-shrink: 0;
+      width:5px; height:5px; border-radius:50%;
+      background:var(--amber); flex-shrink:0;
     }
 
-    /* ── Beyond ── */
-    .beyond-grid {
-      display: flex;
-      flex-direction: column;
-      gap: 1rem;
-    }
-
+    /* ── BEYOND ── */
+    .beyond-grid { display:grid; grid-template-columns:repeat(2,1fr); gap:1.2rem; }
+    @media(max-width:640px){ .beyond-grid{ grid-template-columns:1fr; } }
     .beyond-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 6px;
-      padding: 1.4rem 1.6rem;
-      display: flex;
-      gap: 1.2rem;
-      align-items: flex-start;
-      transition: border-color 0.2s;
+      background:var(--surface);
+      border:1px solid var(--border);
+      border-radius:8px; padding:1.8rem;
+      transition:box-shadow 0.2s;
     }
-
-    .beyond-card:hover { border-color: var(--dim); }
-
+    .beyond-card:hover { box-shadow:0 8px 24px rgba(15,45,82,0.08); }
     .beyond-icon {
-      font-size: 1.1rem;
-      color: var(--accent);
-      flex-shrink: 0;
-      margin-top: 0.1rem;
+      font-size:1.4rem; margin-bottom:0.8rem;
+      display:block;
     }
-
     .beyond-title {
-      font-size: 0.85rem;
-      color: var(--text);
-      margin-bottom: 0.3rem;
-      font-weight: 500;
+      font-family:'Playfair Display',serif;
+      font-size:1.05rem; color:var(--navy);
+      margin-bottom:0.4rem;
     }
+    .beyond-desc { font-size:0.82rem; color:var(--muted); line-height:1.75; }
 
-    .beyond-desc {
-      font-size: 0.78rem;
-      color: var(--muted);
-      line-height: 1.7;
-    }
-
-    /* ── Footer ── */
+    /* ── FOOTER ── */
     footer {
-      padding: 2.5rem 0;
-      border-top: 1px solid var(--border);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      flex-wrap: gap;
-      gap: 1rem;
+      background:var(--navy); color:rgba(255,255,255,0.6);
+      padding:2.5rem 4rem;
+      display:flex; justify-content:space-between; align-items:center;
+      flex-wrap:wrap; gap:1rem;
     }
-
-    .footer-left {
-      font-size: 0.72rem;
-      color: var(--dim);
-    }
-
-    .footer-links {
-      display: flex;
-      gap: 1.5rem;
-    }
-
+    .footer-left { font-size:0.78rem; }
+    .footer-left strong { color:#fff; font-family:'Playfair Display',serif; }
+    .footer-links { display:flex; gap:2rem; }
     .footer-links a {
-      font-size: 0.72rem;
-      color: var(--muted);
-      text-decoration: none;
-      transition: color 0.2s;
+      font-size:0.75rem; color:rgba(255,255,255,0.5);
+      text-decoration:none; transition:color 0.2s;
+      letter-spacing:0.06em;
+    }
+    .footer-links a:hover { color:#fff; }
+
+    /* ── DIVIDER ── */
+    .section-divider {
+      height:1px; background:var(--border);
+      margin:0 4rem;
     }
 
-    .footer-links a:hover { color: var(--text); }
-
-    /* ── Animations ── */
-    @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(18px); }
-      to   { opacity: 1; transform: translateY(0); }
+    /* ── REVEAL ── */
+    .reveal {
+      opacity:0; transform:translateY(28px);
+      transition:opacity 0.6s ease, transform 0.6s ease;
     }
+    .reveal.visible { opacity:1; transform:translateY(0); }
+    .reveal-delay-1 { transition-delay:0.1s; }
+    .reveal-delay-2 { transition-delay:0.2s; }
+    .reveal-delay-3 { transition-delay:0.3s; }
+    .reveal-delay-4 { transition-delay:0.4s; }
 
-    .hero, .project-card, .research-card {
-      animation: fadeUp 0.5s ease both;
-    }
-
-    .project-card:nth-child(1) { animation-delay: 0.05s; }
-    .project-card:nth-child(2) { animation-delay: 0.12s; }
-    .project-card:nth-child(3) { animation-delay: 0.19s; }
-
-    /* ── Cursor dot ── */
-    .cursor-dot {
-      position: fixed;
-      width: 6px; height: 6px;
-      background: var(--accent);
-      border-radius: 50%;
-      pointer-events: none;
-      z-index: 9999;
-      transition: transform 0.1s;
-      transform: translate(-50%, -50%);
-      opacity: 0.5;
-    }
-
-    @media (max-width: 600px) {
-      nav { flex-direction: column; align-items: flex-start; gap: 1rem; }
-      .hero { padding: 3rem 0 2.5rem; }
-      footer { flex-direction: column; }
+    @media(max-width:768px){
+      nav { padding:1rem 1.5rem; }
+      .hero { padding:7rem 1.5rem 4rem; }
+      .stats-bar { grid-template-columns:repeat(2,1fr); padding:1.5rem; }
+      .section { padding:4rem 1.5rem; }
+      .section-divider { margin:0 1.5rem; }
+      footer { padding:2rem 1.5rem; flex-direction:column; align-items:flex-start; }
+      .project-card { grid-template-columns:1fr; }
+      .project-number { display:none; }
     }
   </style>
 </head>
 <body>
 
-<div class="cursor-dot" id="cursor"></div>
+<!-- NAV -->
+<nav id="nav">
+  <a href="#" class="nav-logo">Loumi Tremas</a>
+  <ul class="nav-links">
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#research">Research</a></li>
+    <li><a href="#stack">Stack</a></li>
+    <li><a href="#beyond">Beyond</a></li>
+  </ul>
+</nav>
 
-<div class="container">
-
-  <!-- Nav -->
-  <nav>
-    <a href="#" class="nav-logo">Loumi Tremas</a>
-    <ul class="nav-links">
-      <li><a href="#projects">projects</a></li>
-      <li><a href="#research">research</a></li>
-      <li><a href="#stack">stack</a></li>
-      <li><a href="#beyond">beyond</a></li>
-    </ul>
-  </nav>
-
-  <!-- Hero -->
-  <div class="hero">
-    <div class="hero-label">Research Engineer · PhD Candidate</div>
-    <h1>Deep Learning<br>for <em>Physical Systems</em></h1>
+<!-- HERO -->
+<section class="hero">
+  <canvas id="wave-canvas"></canvas>
+  <div class="hero-content">
+    <div class="hero-eyebrow">PhD Candidate · Research Engineer</div>
+    <h1>Physics meets<br><em>Deep Learning</em></h1>
     <p class="hero-desc">
-      PhD @Paris-Saclay × STMicroelectronics — surrogate models for FDTD simulation,
-      gradient-based inverse design of photonic metasurfaces, diffusion Schrödinger bridges,
-      and JEPA-based world models. 10<sup>6</sup>× inference acceleration in production.
-      <br><br>
-      Started in quantum computing, pivoted to AI after an Erasmus at Uppsala Universitet —
-      and never looked back.
+      CIFRE PhD at Paris-Saclay × STMicroelectronics —
+      <strong>surrogate models for electromagnetic simulation</strong>,
+      gradient-based inverse design of photonic metasurfaces,
+      and JEPA-based world models. Achieved
+      <strong>10<sup>6</sup>× inference acceleration</strong> in production.<br><br>
+      Dreamed of quantum computing. An Erasmus in Uppsala changed everything.
     </p>
-    <div class="hero-links">
+    <div class="hero-cta">
       <a href="https://github.com/loumpare" class="btn btn-primary" target="_blank">
-        <svg width="13" height="13" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.2 11.38.6.11.82-.26.82-.58v-2.17c-3.34.73-4.04-1.61-4.04-1.61-.54-1.38-1.33-1.75-1.33-1.75-1.09-.74.08-.73.08-.73 1.2.08 1.84 1.24 1.84 1.24 1.07 1.83 2.8 1.3 3.48 1 .11-.78.42-1.3.76-1.6-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.13-.3-.54-1.52.12-3.18 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 0 1 3-.4c1.02 0 2.04.13 3 .4 2.28-1.55 3.3-1.23 3.3-1.23.66 1.66.25 2.88.12 3.18.77.84 1.24 1.91 1.24 3.22 0 4.61-2.81 5.63-5.48 5.92.43.37.81 1.1.81 2.22v3.29c0 .32.22.7.83.58C20.57 21.8 24 17.3 24 12 24 5.37 18.63 0 12 0z"/></svg>
+        <svg width="14" height="14" fill="currentColor" viewBox="0 0 24 24"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.44 9.8 8.2 11.38.6.11.82-.26.82-.58v-2.17c-3.34.73-4.04-1.61-4.04-1.61-.54-1.38-1.33-1.75-1.33-1.75-1.09-.74.08-.73.08-.73 1.2.08 1.84 1.24 1.84 1.24 1.07 1.83 2.8 1.3 3.48 1 .11-.78.42-1.3.76-1.6-2.67-.3-5.47-1.33-5.47-5.93 0-1.31.47-2.38 1.24-3.22-.13-.3-.54-1.52.12-3.18 0 0 1.01-.32 3.3 1.23a11.5 11.5 0 0 1 3-.4c1.02 0 2.04.13 3 .4 2.28-1.55 3.3-1.23 3.3-1.23.66 1.66.25 2.88.12 3.18.77.84 1.24 1.91 1.24 3.22 0 4.61-2.81 5.63-5.48 5.92.43.37.81 1.1.81 2.22v3.29c0 .32.22.7.83.58C20.57 21.8 24 17.3 24 12 24 5.37 18.63 0 12 0z"/></svg>
         GitHub
       </a>
       <a href="https://www.linkedin.com/in/loumi-tremas" class="btn btn-ghost" target="_blank">LinkedIn</a>
@@ -521,269 +378,374 @@
       <a href="CV.pdf" class="btn btn-ghost" target="_blank">CV ↓</a>
     </div>
   </div>
+</section>
 
-  <!-- Projects -->
-  <section id="projects">
-    <div class="section-label">
-      Projects <span>// ML portfolio</span>
+<!-- STATS BAR -->
+<div class="stats-bar">
+  <div class="stat-item">
+    <span class="stat-number" data-count="6" data-suffix="×10⁶">0</span>
+    <span class="stat-label">Inference speedup</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-number" data-count="8" data-suffix=" papers">0</span>
+    <span class="stat-label">Publications</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-number" data-count="100" data-suffix=" epochs">0</span>
+    <span class="stat-label">I-JEPA trained</span>
+  </div>
+  <div class="stat-item">
+    <span class="stat-number" data-count="3" data-suffix=" years">0</span>
+    <span class="stat-label">CIFRE PhD</span>
+  </div>
+</div>
+
+<!-- PROJECTS -->
+<section class="section" id="projects">
+  <div class="section-inner">
+    <div class="section-header reveal">
+      <div class="section-eyebrow">ML Portfolio</div>
+      <h2 class="section-title">Projects</h2>
     </div>
+    <div class="projects-grid">
 
-    <div class="projects">
-
-      <!-- I-JEPA -->
-      <div class="project-card">
-        <div class="project-header">
-          <span class="project-title">I-JEPA</span>
-          <span class="badge badge-done">✓ complete</span>
+      <div class="project-card reveal reveal-delay-1">
+        <div class="project-card-left">
+          <div class="project-badge badge-done">✓ Complete</div>
+          <h3 class="project-title">I-JEPA</h3>
+          <p class="project-desc">
+            Close study reimplementation of Image Joint Embedding Predictive Architecture
+            (Assran et al., CVPR 2023). Read the paper, implemented end-to-end, trained and
+            analyzed results — block masking with aspect-ratio constraints, dual-encoder with
+            EMA target, predictor with learnable mask tokens.
+          </p>
+          <div class="project-meta">
+            <span class="meta-item">Dataset <strong>STL-10 unlabeled</strong></span>
+            <span class="meta-item">Loss <strong>0.40 → 0.088</strong></span>
+            <span class="meta-item"><strong>100 epochs · 72 min · RTX 3090</strong></span>
+          </div>
+          <div class="project-tags">
+            <span class="tag">SSL</span><span class="tag">ViT</span>
+            <span class="tag">EMA</span><span class="tag">PyTorch</span><span class="tag">JEPA</span>
+          </div>
+          <span class="project-link" style="opacity:0.35;cursor:default;border:none;">Code coming soon</span>
         </div>
-        <p class="project-desc">
-          Close study reimplementation of Image Joint Embedding Predictive Architecture (Assran et al., CVPR 2023).
-          Read the paper, implemented end-to-end, trained and analyzed results — block masking with aspect-ratio
-          constraints, dual-encoder with EMA target, predictor with learnable mask tokens.
-        </p>
-        <div class="project-meta">
-          <span class="meta-item">Dataset <strong>STL-10 unlabeled</strong></span>
-          <span class="meta-item">Loss <strong>0.40 → 0.088</strong></span>
-          <span class="meta-item">Training <strong>100 epochs · ~72 min</strong></span>
-          <span class="meta-item">HW <strong>RTX 3090</strong></span>
-        </div>
-        <div class="project-tags">
-          <span class="tag">SSL</span>
-          <span class="tag">ViT</span>
-          <span class="tag">EMA</span>
-          <span class="tag">PyTorch</span>
-          <span class="tag">JEPA</span>
-        </div>
-        <span class="project-link" style="opacity:0.4; cursor:default;">Code coming soon</span>
-      </div>
-
-      <!-- LeWorldModel -->
-      <div class="project-card in-progress">
-        <div class="project-header">
-          <span class="project-title">LeWorldModel</span>
-          <span class="badge badge-wip">in progress</span>
-        </div>
-        <p class="project-desc">
-          Study reimplementation of the JEPA-based world model for robotics (arXiv 2603.19312).
-          Reading the paper and progressively implementing — single encoder ViT, AdaLN action conditioning,
-          SIGReg anti-collapse regularization, end-to-end gradient training without EMA target.
-        </p>
-        <div class="project-meta">
-          <span class="meta-item">Dataset <strong>facebook/jepa-wms pusht</strong></span>
-          <span class="meta-item">Actions <strong>2-dim continuous</strong></span>
-        </div>
-        <div class="project-tags">
-          <span class="tag">World Model</span>
-          <span class="tag">AdaLN</span>
-          <span class="tag">SIGReg</span>
-          <span class="tag">Robotics</span>
-          <span class="tag">JEPA</span>
+        <div class="project-card-right">
+          <div class="project-number">01</div>
         </div>
       </div>
 
-      <!-- SmartHome-AI -->
-      <div class="project-card">
-        <div class="project-header">
-          <span class="project-title">SmartHome-AI</span>
-          <span class="badge badge-done">✓ complete</span>
+      <div class="project-card reveal reveal-delay-2">
+        <div class="project-card-left">
+          <div class="project-badge badge-wip">⟳ In progress</div>
+          <h3 class="project-title">LeWorldModel</h3>
+          <p class="project-desc">
+            Study reimplementation of the JEPA-based world model for robotics (arXiv 2603.19312).
+            Reading the paper and progressively implementing — single encoder ViT, AdaLN action
+            conditioning, SIGReg anti-collapse regularization, end-to-end gradient training without EMA.
+          </p>
+          <div class="project-meta">
+            <span class="meta-item">Dataset <strong>facebook/jepa-wms pusht</strong></span>
+            <span class="meta-item">Actions <strong>2-dim continuous</strong></span>
+          </div>
+          <div class="project-tags">
+            <span class="tag">World Model</span><span class="tag">AdaLN</span>
+            <span class="tag">SIGReg</span><span class="tag">Robotics</span><span class="tag">JEPA</span>
+          </div>
         </div>
-        <p class="project-desc">
-          Personal project — modular, privacy-focused smart home assistant powered by local LLMs.
-          Multi-agent architecture routing requests between specialized agents (weather, news, calendar, home automation).
-          Fully containerized with Docker, runs offline on a home server.
-        </p>
-        <div class="project-meta">
-          <span class="meta-item">Stack <strong>FastAPI · Streamlit · Docker</strong></span>
-          <span class="meta-item">LLM <strong>Local (Ollama/LM Studio)</strong></span>
+        <div class="project-card-right">
+          <div class="project-number">02</div>
         </div>
-        <div class="project-tags">
-          <span class="tag">Multi-Agent</span>
-          <span class="tag">LLM</span>
-          <span class="tag">FastAPI</span>
-          <span class="tag">Docker</span>
-          <span class="tag">Privacy-First</span>
-        </div>
-        <a href="https://github.com/loumpare/SmartHome-AI" class="project-link" target="_blank">
-          View on GitHub →
-        </a>
       </div>
 
-      <!-- FDTD World Model -->
-      <div class="project-card soon">
-        <div class="project-header">
-          <span class="project-title">World Model for Physical Simulation</span>
-          <span class="badge badge-soon">upcoming</span>
+      <div class="project-card reveal reveal-delay-3">
+        <div class="project-card-left">
+          <div class="project-badge badge-done">✓ Complete</div>
+          <h3 class="project-title">SmartHome-AI</h3>
+          <p class="project-desc">
+            Personal project — modular, privacy-focused smart home assistant powered by local LLMs.
+            Multi-agent architecture routing requests between specialized agents (weather, news, calendar,
+            home automation). Fully containerized, runs offline on a home server.
+          </p>
+          <div class="project-meta">
+            <span class="meta-item">Stack <strong>FastAPI · Streamlit · Docker</strong></span>
+            <span class="meta-item">LLM <strong>Local (Ollama / LM Studio)</strong></span>
+          </div>
+          <div class="project-tags">
+            <span class="tag">Multi-Agent</span><span class="tag">LLM</span>
+            <span class="tag">FastAPI</span><span class="tag">Docker</span><span class="tag">Privacy-First</span>
+          </div>
+          <a href="https://github.com/loumpare/SmartHome-AI" class="project-link" target="_blank">View on GitHub →</a>
         </div>
-        <p class="project-desc">
-          Exploring JEPA-based world models applied to electromagnetic simulation —
-          using the LeWorldModel architecture as a foundation to learn latent dynamics
-          of FDTD systems for metasurface inverse design.
-          A natural bridge between the ML portfolio and the PhD research.
-        </p>
-        <div class="project-tags">
-          <span class="tag">World Model</span>
-          <span class="tag">FDTD</span>
-          <span class="tag">Metasurfaces</span>
-          <span class="tag">JEPA</span>
-          <span class="tag">Inverse Design</span>
+        <div class="project-card-right">
+          <div class="project-number">03</div>
+        </div>
+      </div>
+
+      <div class="project-card reveal reveal-delay-4">
+        <div class="project-card-left">
+          <div class="project-badge badge-soon">◌ Upcoming</div>
+          <h3 class="project-title">World Model for Physical Simulation</h3>
+          <p class="project-desc">
+            Exploring JEPA-based world models applied to electromagnetic simulation —
+            using the LeWorldModel architecture as a foundation to learn latent dynamics
+            of FDTD systems for metasurface inverse design.
+            A natural bridge between the ML portfolio and the PhD research.
+          </p>
+          <div class="project-tags">
+            <span class="tag">World Model</span><span class="tag">FDTD</span>
+            <span class="tag">Metasurfaces</span><span class="tag">JEPA</span><span class="tag">Inverse Design</span>
+          </div>
+        </div>
+        <div class="project-card-right">
+          <div class="project-number">04</div>
         </div>
       </div>
 
     </div>
-  </section>
+  </div>
+</section>
 
-  <section id="research">
-    <div class="section-label">
-      Research <span>// PhD thesis & publications</span>
+<div class="section-divider"></div>
+
+<!-- RESEARCH -->
+<section class="section" id="research">
+  <div class="section-inner">
+    <div class="section-header reveal">
+      <div class="section-eyebrow">PhD Thesis</div>
+      <h2 class="section-title">Research</h2>
     </div>
-    <div class="research-card">
-      <div class="project-header">
-        <span class="research-title">Surrogate Models & Inverse Design for Photonic Metasurfaces</span>
-      </div>
+    <div class="research-card reveal">
+      <h3 class="research-title">Surrogate Models & Inverse Design<br>for Photonic Metasurfaces</h3>
       <p class="research-desc">
-        CIFRE PhD @Paris-Saclay × STMicroelectronics (Institut d'Optique Graduate School, 2023–2026).
-        Large-scale deep learning surrogates for FDTD electromagnetic simulation achieving
-        10<sup>6</sup>× inference acceleration. Diffusion Schrödinger bridges for inverse design optimization.
-        Distributed training on GPU clusters.
+        CIFRE PhD at Paris-Saclay × STMicroelectronics (Institut d'Optique Graduate School, 2023–2026).
+        Large-scale deep learning surrogates for FDTD electromagnetic simulation achieving 10<sup>6</sup>×
+        inference acceleration. Diffusion Schrödinger bridges for inverse design optimization.
+        Distributed training on GPU clusters via Ray on Azure.
       </p>
-      <div class="research-keywords" style="margin-bottom: 1.2rem;">
-        <span class="tag">FDTD Simulation</span>
-        <span class="tag">Metasurfaces</span>
-        <span class="tag">Inverse Design</span>
-        <span class="tag">Schrödinger Bridges</span>
-        <span class="tag">Diffusion Models</span>
-        <span class="tag">Nanophotonics</span>
+      <div class="research-keywords">
+        <span class="tag-light">FDTD Simulation</span>
+        <span class="tag-light">Metasurfaces</span>
+        <span class="tag-light">Inverse Design</span>
+        <span class="tag-light">Schrödinger Bridges</span>
+        <span class="tag-light">Diffusion Models</span>
+        <span class="tag-light">Nanophotonics</span>
+        <span class="tag-light">Distributed Training</span>
       </div>
-
-      <div style="border-top: 1px solid var(--border); padding-top: 1.2rem; display: flex; flex-direction: column; gap: 0.8rem;">
-        <div style="font-size: 0.68rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--dim); margin-bottom: 0.2rem;">Selected publications</div>
-
+      <span class="pubs-label">Selected Publications</span>
+      <div class="pub-list">
         <div class="pub-item">
-          <span class="pub-venue">SPIE Photonics Europe 2026</span>
-          <span class="pub-title">Diffusion Schrödinger bridges for metasurface inverse design</span>
+          <span class="pub-year">2026</span>
+          <span class="pub-venue">SPIE Photonics EU</span>
+          <a href="https://arxiv.org/abs/2602.06605" class="pub-title" target="_blank" style="color:rgba(255,255,255,0.75);text-decoration:none;border-bottom:1px solid rgba(200,135,58,0.4);transition:border-color 0.2s;">Diffusion Schrödinger bridges for metasurface inverse design ↗</a>
         </div>
         <div class="pub-item">
-          <span class="pub-venue">SPIE 2026</span>
-          <span class="pub-title">Enhanced posterior sampling via diffusion models for efficient metasurfaces inverse design</span>
+          <span class="pub-year">2026</span>
+          <span class="pub-venue">SPIE</span>
+          <a href="https://arxiv.org/abs/2601.15210" class="pub-title" target="_blank" style="color:rgba(255,255,255,0.75);text-decoration:none;border-bottom:1px solid rgba(200,135,58,0.4);transition:border-color 0.2s;">Enhanced posterior sampling via diffusion models for efficient metasurfaces inverse design ↗</a>
         </div>
         <div class="pub-item">
-          <span class="pub-venue">SISPAD 2025</span>
-          <span class="pub-title">Inverse design of optical metasurface for CMOS imagers: a multi-objective optimization approach</span>
-        </div>
-        <div class="pub-item">
-          <span class="pub-venue">SISPAD 2024</span>
-          <span class="pub-title">Approaches to simulating meta-surfaces for flat optical devices: the transition to solutions based on neural networks</span>
-        </div>
-        <div class="pub-item">
-          <span class="pub-venue">META 2026 — Dublin</span>
+          <span class="pub-year">2026</span>
+          <span class="pub-venue">META — Dublin</span>
           <span class="pub-title">Self-enhanced generative metasurface inverse design</span>
         </div>
         <div class="pub-item">
-          <span class="pub-venue">META 2024 — Toyama</span>
-          <span class="pub-title">Impact of numerical simulation boundary-decomposition errors on optical performance of metadiffusors</span>
+          <span class="pub-year">2025</span>
+          <span class="pub-venue">SISPAD</span>
+          <a href="https://ieeexplore.ieee.org/document/11185966" class="pub-title" target="_blank" style="color:rgba(255,255,255,0.75);text-decoration:none;border-bottom:1px solid rgba(200,135,58,0.4);transition:border-color 0.2s;">Inverse design of optical metasurface for CMOS imagers: a multi-objective optimization approach ↗</a>
         </div>
         <div class="pub-item">
-          <span class="pub-venue">META 2023</span>
+          <span class="pub-year">2024</span>
+          <span class="pub-venue">SISPAD</span>
+          <a href="https://ieeexplore.ieee.org/document/10733226" class="pub-title" target="_blank" style="color:rgba(255,255,255,0.75);text-decoration:none;border-bottom:1px solid rgba(200,135,58,0.4);transition:border-color 0.2s;">Approaches to simulating meta-surfaces for flat optical devices: transition to neural networks ↗</a>
+        </div>
+        <div class="pub-item">
+          <span class="pub-year">2024</span>
+          <span class="pub-venue">META — Toyama</span>
+          <span class="pub-title">Impact of numerical simulation boundary-decomposition errors on optical performance</span>
+        </div>
+        <div class="pub-item">
+          <span class="pub-year">2023</span>
+          <span class="pub-venue">META</span>
           <span class="pub-title">Statistical study of the non-periodicity effect on metasurface over transmission and phase</span>
         </div>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- Stack -->
-  <section id="stack">
-    <div class="section-label">
-      Stack <span>// tools & frameworks</span>
+<div class="section-divider"></div>
+
+<!-- STACK -->
+<section class="section" id="stack">
+  <div class="section-inner">
+    <div class="section-header reveal">
+      <div class="section-eyebrow">Tools & Frameworks</div>
+      <h2 class="section-title">Stack</h2>
     </div>
     <div class="stack-grid">
-      <div class="stack-item"><span class="stack-dot"></span>PyTorch</div>
-      <div class="stack-item"><span class="stack-dot"></span>JAX / Flax</div>
-      <div class="stack-item"><span class="stack-dot"></span>HuggingFace</div>
-      <div class="stack-item"><span class="stack-dot"></span>CUDA</div>
-      <div class="stack-item"><span class="stack-dot"></span>Python / C</div>
-      <div class="stack-item"><span class="stack-dot"></span>Ray (Distributed)</div>
-      <div class="stack-item"><span class="stack-dot"></span>Azure</div>
-      <div class="stack-item"><span class="stack-dot"></span>Linux</div>
-      <div class="stack-item"><span class="stack-dot"></span>Diffusion Models</div>
-      <div class="stack-item"><span class="stack-dot"></span>Computer Vision</div>
-      <div class="stack-item"><span class="stack-dot"></span>FDTD</div>
-      <div class="stack-item"><span class="stack-dot"></span>RTX 3090</div>
+      <div class="stack-item reveal reveal-delay-1"><span class="stack-dot"></span>PyTorch</div>
+      <div class="stack-item reveal reveal-delay-1"><span class="stack-dot"></span>JAX / Flax</div>
+      <div class="stack-item reveal reveal-delay-2"><span class="stack-dot"></span>HuggingFace</div>
+      <div class="stack-item reveal reveal-delay-2"><span class="stack-dot"></span>CUDA</div>
+      <div class="stack-item reveal reveal-delay-2"><span class="stack-dot"></span>Python / C</div>
+      <div class="stack-item reveal reveal-delay-3"><span class="stack-dot"></span>Ray (Distributed)</div>
+      <div class="stack-item reveal reveal-delay-3"><span class="stack-dot"></span>Azure</div>
+      <div class="stack-item reveal reveal-delay-3"><span class="stack-dot"></span>Docker</div>
+      <div class="stack-item reveal reveal-delay-4"><span class="stack-dot"></span>Linux</div>
+      <div class="stack-item reveal reveal-delay-4"><span class="stack-dot"></span>Diffusion Models</div>
+      <div class="stack-item reveal reveal-delay-4"><span class="stack-dot"></span>Computer Vision</div>
+      <div class="stack-item reveal reveal-delay-4"><span class="stack-dot"></span>FDTD / Ansys</div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- Beyond the lab -->
-  <section id="beyond">
-    <div class="section-label">
-      Beyond the lab <span>// the human behind the research</span>
+<div class="section-divider"></div>
+
+<!-- BEYOND -->
+<section class="section" id="beyond">
+  <div class="section-inner">
+    <div class="section-header reveal">
+      <div class="section-eyebrow">The Human Behind the Research</div>
+      <h2 class="section-title">Beyond the lab</h2>
     </div>
     <div class="beyond-grid">
-
-      <div class="beyond-card">
-        <div class="beyond-icon">◎</div>
-        <div class="beyond-content">
-          <div class="beyond-title">Endurance</div>
-          <p class="beyond-desc">
-            Marathon in 3:38, semi in 1:39, tour du Lac Léman in 8h.
-            Currently rebuilding after an injury — first triathlon still on the list.
-          </p>
-        </div>
+      <div class="beyond-card reveal reveal-delay-1">
+        <span class="beyond-icon">◎</span>
+        <div class="beyond-title">Endurance</div>
+        <p class="beyond-desc">Running and triathlon. Currently rebuilding after an injury — first tri still on the list.</p>
       </div>
-
-      <div class="beyond-card">
-        <div class="beyond-icon">△</div>
-        <div class="beyond-content">
-          <div class="beyond-title">Paragliding</div>
-          <p class="beyond-desc">
-            Another way to push limits — based in Grenoble, the Alps make for a pretty good backyard.
-          </p>
-        </div>
+      <div class="beyond-card reveal reveal-delay-2">
+        <span class="beyond-icon">◈</span>
+        <div class="beyond-title">4L Trophy — 4th place</div>
+        <p class="beyond-desc">6,000 km humanitarian rally across the Moroccan desert. 1,000+ teams.
+        The hardest part: crossing oueds without getting stuck in the sand.</p>
       </div>
-
-      <div class="beyond-card">
-        <div class="beyond-icon">◈</div>
-        <div class="beyond-content">
-          <div class="beyond-title">4L Trophy — 4th place</div>
-          <p class="beyond-desc">
-            6,000 km humanitarian rally across the Moroccan desert. 1,000+ teams.
-            The hardest part: crossing oueds without getting stuck in the sand.
-          </p>
-        </div>
+      <div class="beyond-card reveal reveal-delay-3">
+        <span class="beyond-icon">△</span>
+        <div class="beyond-title">Paragliding</div>
+        <p class="beyond-desc">Another way to read the physics of air. Based in Grenoble —
+        the Alps make for a pretty good backyard.</p>
       </div>
-
-      <div class="beyond-card">
-        <div class="beyond-icon">◑</div>
-        <div class="beyond-content">
-          <div class="beyond-title">Uppsala, Sweden</div>
-          <p class="beyond-desc">
-            An Erasmus semester that changed everything — arrived wanting to do quantum computing,
-            left wanting to do AI. One of the best chapters of my life.
-          </p>
-        </div>
+      <div class="beyond-card reveal reveal-delay-4">
+        <span class="beyond-icon">◑</span>
+        <div class="beyond-title">Uppsala, Sweden</div>
+        <p class="beyond-desc">An Erasmus semester that changed everything — arrived wanting to do
+        quantum computing, left wanting to do AI. One of the best chapters of my life.</p>
       </div>
-
     </div>
-  </section>
+  </div>
+</section>
 
-  <footer>
-    <div class="footer-left">Loumi Tremas · Grenoble, France · 2026</div>
-    <div class="footer-links">
-      <a href="https://github.com/loumpare" target="_blank">GitHub</a>
-      <a href="https://www.linkedin.com/in/loumi-tremas" target="_blank">LinkedIn</a>
-      <a href="mailto:tremasloumi@gmail.com">Email</a>
-    </div>
-  </footer>
-
-</div>
+<!-- FOOTER -->
+<footer>
+  <div class="footer-left">
+    <strong>Loumi Tremas</strong> · Grenoble, France · 2026
+  </div>
+  <div class="footer-links">
+    <a href="https://github.com/loumpare" target="_blank">GitHub</a>
+    <a href="https://www.linkedin.com/in/loumi-tremas" target="_blank">LinkedIn</a>
+    <a href="mailto:tremasloumi@gmail.com">tremasloumi@gmail.com</a>
+  </div>
+</footer>
 
 <script>
-  // Subtle cursor dot
-  const cursor = document.getElementById('cursor');
-  document.addEventListener('mousemove', e => {
-    cursor.style.left = e.clientX + 'px';
-    cursor.style.top  = e.clientY + 'px';
+// ── WAVE CANVAS ──
+(function() {
+  const canvas = document.getElementById('wave-canvas');
+  const ctx = canvas.getContext('2d');
+  let W, H, t = 0;
+
+  function resize() {
+    W = canvas.width  = canvas.offsetWidth;
+    H = canvas.height = canvas.offsetHeight;
+  }
+  window.addEventListener('resize', resize);
+  resize();
+
+  function draw() {
+    ctx.clearRect(0, 0, W, H);
+    const lines = 18;
+    const spacing = H / (lines + 1);
+
+    for (let i = 1; i <= lines; i++) {
+      const y0 = i * spacing;
+      const amp = 18 * Math.sin(i * 0.4 + t * 0.3);
+      const freq = 0.018 + i * 0.001;
+      const phase = t * 0.6 + i * 0.5;
+
+      ctx.beginPath();
+      ctx.moveTo(0, y0);
+      for (let x = 0; x <= W; x += 4) {
+        const envelope = Math.exp(-0.5 * Math.pow((x - W * 0.5) / (W * 0.28), 2));
+        const y = y0 + amp * envelope * Math.sin(freq * x - phase);
+        ctx.lineTo(x, y);
+      }
+      const alpha = 0.12 + 0.08 * Math.abs(Math.sin(i * 0.3));
+      ctx.strokeStyle = `rgba(15,45,82,${alpha})`;
+      ctx.lineWidth = 1;
+      ctx.stroke();
+    }
+    t += 0.04;
+    requestAnimationFrame(draw);
+  }
+  draw();
+})();
+
+// ── NAV SCROLL ──
+const nav = document.getElementById('nav');
+window.addEventListener('scroll', () => {
+  nav.classList.toggle('scrolled', window.scrollY > 60);
+});
+
+// ── SCROLL REVEAL ──
+const reveals = document.querySelectorAll('.reveal');
+const observer = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.classList.add('visible');
+      observer.unobserve(e.target);
+    }
   });
-  document.addEventListener('mouseleave', () => cursor.style.opacity = '0');
-  document.addEventListener('mouseenter', () => cursor.style.opacity = '1');
+}, { threshold: 0.12 });
+reveals.forEach(el => observer.observe(el));
+
+// ── COUNTER ANIMATION ──
+function animateCount(el) {
+  const target = parseInt(el.dataset.count);
+  const suffix = el.dataset.suffix || '';
+  const duration = 1600;
+  const start = performance.now();
+  function step(now) {
+    const p = Math.min((now - start) / duration, 1);
+    const ease = 1 - Math.pow(1 - p, 3);
+    el.textContent = Math.round(ease * target) + suffix;
+    if (p < 1) requestAnimationFrame(step);
+  }
+  requestAnimationFrame(step);
+}
+const statsObserver = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      e.target.querySelectorAll('[data-count]').forEach(animateCount);
+      statsObserver.unobserve(e.target);
+    }
+  });
+}, { threshold: 0.3 });
+statsObserver.observe(document.querySelector('.stats-bar'));
+
+// ── 3D TILT on project cards ──
+document.querySelectorAll('.project-card').forEach(card => {
+  card.addEventListener('mousemove', e => {
+    const r = card.getBoundingClientRect();
+    const x = (e.clientX - r.left) / r.width  - 0.5;
+    const y = (e.clientY - r.top)  / r.height - 0.5;
+    card.style.transform = `perspective(800px) rotateY(${x * 4}deg) rotateX(${-y * 4}deg) translateZ(4px)`;
+  });
+  card.addEventListener('mouseleave', () => {
+    card.style.transform = '';
+  });
+});
 </script>
 
 </body>
