@@ -389,24 +389,71 @@
     .reveal-delay-3 { transition-delay:0.3s; }
     .reveal-delay-4 { transition-delay:0.4s; }
 
+    /* ── HAMBURGER ── */
+    .hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      padding: 4px;
+      background: none;
+      border: none;
+    }
+    .hamburger span {
+      display: block;
+      width: 22px; height: 2px;
+      background: var(--navy);
+      border-radius: 2px;
+      transition: transform 0.3s, opacity 0.3s;
+    }
+    .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+    .hamburger.open span:nth-child(2) { opacity: 0; }
+    .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
     @media(max-width:768px){
       nav { padding:1rem 1.5rem; }
+      .hamburger { display:flex; }
+      .nav-links {
+        display: none;
+        position: fixed;
+        top: 0; left: 0; right: 0;
+        background: rgba(245,245,242,0.97);
+        backdrop-filter: blur(12px);
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 2.5rem;
+        height: 100vh;
+        z-index: 99;
+      }
+      .nav-links.open { display: flex; }
+      .nav-links a {
+        font-size: 1rem;
+        letter-spacing: 0.2em;
+      }
       .hero { padding:7rem 1.5rem 4rem; }
-      .stats-bar { grid-template-columns:repeat(2,1fr); padding:1.5rem; }
+      .stats-bar { grid-template-columns:repeat(2,1fr); padding:1.5rem; gap:1.5rem; }
+      .stat-number { font-size: 1.5rem; }
       .section { padding:4rem 1.5rem; }
       .section-divider { margin:0 1.5rem; }
       footer { padding:2rem 1.5rem; flex-direction:column; align-items:flex-start; }
       .project-card { grid-template-columns:1fr; }
       .project-number { display:none; }
-    }
-  </style>
+      .beyond-grid { grid-template-columns:1fr; }
+      .exp-item { grid-template-columns:1fr; }
+      .exp-left { text-align:left; flex-direction:row; align-items:center; gap:0.6rem; }
+      .exp-dot { display:none; }
+    }  </style>
 </head>
 <body>
 
 <!-- NAV -->
 <nav id="nav">
   <a href="#" class="nav-logo">Loumi Tremas</a>
-  <ul class="nav-links">
+  <button class="hamburger" id="hamburger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+  <ul class="nav-links" id="nav-links">
     <li><a href="#projects">Projects</a></li>
     <li><a href="#experience">Experience</a></li>
     <li><a href="#research">Research</a></li>
@@ -424,7 +471,8 @@
     <p class="hero-desc">
       CIFRE PhD at Paris-Saclay × STMicroelectronics —
       <strong>surrogate models for electromagnetic simulation</strong>,
-      gradient-based inverse design of photonic metasurfaces. Achieved
+      gradient-based inverse design of photonic metasurfaces,
+      and JEPA-based world models. Achieved
       <strong>10<sup>6</sup>× inference acceleration</strong> in production.<br><br>
       Dreamed of quantum computing. An Erasmus in Uppsala changed everything.
     </p>
@@ -891,6 +939,21 @@
 const nav = document.getElementById('nav');
 window.addEventListener('scroll', () => {
   nav.classList.toggle('scrolled', window.scrollY > 60);
+});
+
+// ── HAMBURGER ──
+const hamburger = document.getElementById('hamburger');
+const navLinks  = document.getElementById('nav-links');
+hamburger.addEventListener('click', () => {
+  hamburger.classList.toggle('open');
+  navLinks.classList.toggle('open');
+});
+// Close menu when a link is clicked
+navLinks.querySelectorAll('a').forEach(a => {
+  a.addEventListener('click', () => {
+    hamburger.classList.remove('open');
+    navLinks.classList.remove('open');
+  });
 });
 
 // ── SCROLL REVEAL ──
