@@ -550,24 +550,22 @@
 
       <div class="project-card reveal reveal-delay-1">
         <div class="project-card-left">
-          <div class="project-badge badge-done">✓ Complete</div>
-          <h3 class="project-title">I-JEPA</h3>
+          <div class="project-badge badge-wip">⟳ In progress</div>
+          <h3 class="project-title">JEPA-ViT → LeWorldModel</h3>
           <p class="project-desc">
-            Close study reimplementation of Image Joint Embedding Predictive Architecture
-            (Assran et al., CVPR 2023). Read the paper, implemented end-to-end, trained and
-            analyzed results — block masking with aspect-ratio constraints, dual-encoder with
-            EMA target, predictor with learnable mask tokens.
+            From-scratch reimplementation of the Facebook Research JEPA world model for robotics
+            (github.com/facebookresearch/jepa-wms). Still in progress.
           </p>
           <div class="project-meta">
-            <span class="meta-item">Dataset <strong>STL-10 unlabeled</strong></span>
-            <span class="meta-item">Loss <strong>0.40 → 0.088</strong></span>
-            <span class="meta-item"><strong>100 epochs · 72 min · RTX 3090</strong></span>
+            <span class="meta-item">I-JEPA loss <strong>0.40 → 0.088 · 100 epochs · 72 min</strong></span>
+            <span class="meta-item">WM dataset <strong>PushT-Noise · 18,685 episodes</strong></span>
+            <span class="meta-item">WM <strong>~21M params · RTX 3090</strong></span>
           </div>
           <div class="project-tags">
-            <span class="tag">SSL</span><span class="tag">ViT</span>
-            <span class="tag">EMA</span><span class="tag">PyTorch</span><span class="tag">JEPA</span>
+            <span class="tag">SSL</span><span class="tag">JEPA</span><span class="tag">ViT</span>
+            <span class="tag">EMA</span><span class="tag">World Model</span>
+            <span class="tag">AdaLN</span><span class="tag">SIGReg</span><span class="tag">Robotics</span>
           </div>
-          <span class="project-link" style="opacity:0.35;cursor:default;border:none;">Code coming soon</span>
         </div>
         <div class="project-card-right">
           <div class="project-number">01</div>
@@ -575,29 +573,6 @@
       </div>
 
       <div class="project-card reveal reveal-delay-2">
-        <div class="project-card-left">
-          <div class="project-badge badge-wip">⟳ In progress</div>
-          <h3 class="project-title">LeWorldModel</h3>
-          <p class="project-desc">
-            Study reimplementation of the JEPA-based world model for robotics (arXiv 2603.19312).
-            Reading the paper and progressively implementing — single encoder ViT, AdaLN action
-            conditioning, SIGReg anti-collapse regularization, end-to-end gradient training without EMA.
-          </p>
-          <div class="project-meta">
-            <span class="meta-item">Dataset <strong>facebook/jepa-wms pusht</strong></span>
-            <span class="meta-item">Actions <strong>2-dim continuous</strong></span>
-          </div>
-          <div class="project-tags">
-            <span class="tag">World Model</span><span class="tag">AdaLN</span>
-            <span class="tag">SIGReg</span><span class="tag">Robotics</span><span class="tag">JEPA</span>
-          </div>
-        </div>
-        <div class="project-card-right">
-          <div class="project-number">02</div>
-        </div>
-      </div>
-
-      <div class="project-card reveal reveal-delay-3">
         <div class="project-card-left">
           <div class="project-badge badge-done">✓ Complete</div>
           <h3 class="project-title">SmartHome-AI</h3>
@@ -617,10 +592,38 @@
           <a href="https://github.com/loumpare/SmartHome-AI" class="project-link" target="_blank">View on GitHub →</a>
         </div>
         <div class="project-card-right">
+          <div class="project-number">02</div>
+        </div>
+      </div>
+
+      <div class="project-card reveal reveal-delay-3">
+        <div class="project-card-left">
+          <div class="project-badge badge-done">✓ Complete</div>
+          <h3 class="project-title">MiniToto</h3>
+          <p class="project-desc">
+            Reproduction study of Datadog Toto for zero-shot anomaly detection on real observability metrics.
+            Evaluated Toto-Open-Base-1.0 (151M params, Apache 2.0) against Z-Score and IsolationForest
+            baselines, then fine-tuned with LoRA (rank 16, ~1.3% params) on NAB AWS CloudWatch — 17 series,
+            67,740 points, 9.32% anomaly rate. Results: Toto zero-shot F1 0.174 / NAB 42.8 — Z-Score
+            F1 0.212 / NAB 50.4 — IForest F1 0.297 / NAB −152. Built as a technical deep-dive for the
+            Datadog DAIR research engineer role.
+          </p>
+          <div class="project-meta">
+            <span class="meta-item">Dataset <strong>NAB AWS CloudWatch · 17 series · 67,740 pts</strong></span>
+            <span class="meta-item">Toto zero-shot <strong>F1 0.174 · NAB 42.8</strong></span>
+            <span class="meta-item">vs Z-Score <strong>F1 0.212 · NAB 50.4</strong></span>
+          </div>
+          <div class="project-tags">
+            <span class="tag">Time Series</span><span class="tag">Foundation Model</span>
+            <span class="tag">LoRA</span><span class="tag">Anomaly Detection</span><span class="tag">NAB</span>
+          </div>
+        </div>
+        <div class="project-card-right">
           <div class="project-number">03</div>
         </div>
       </div>
 
+      <!--
       <div class="project-card reveal reveal-delay-4">
         <div class="project-card-left">
           <div class="project-badge badge-soon">◌ Upcoming</div>
@@ -640,6 +643,7 @@
           <div class="project-number">04</div>
         </div>
       </div>
+      -->
 
     </div>
   </div>
@@ -1052,16 +1056,13 @@ const translations = {
     stat_epochs: "I-JEPA trained", stat_years: "CIFRE PhD",
     eyebrow_projects: "ML Portfolio", sec_projects: "Projects",
     badge_done: "✓ Complete", badge_wip: "⟳ In progress", badge_soon: "◌ Upcoming",
-    ijepa_title: "I-JEPA",
-    ijepa_desc: "Close study reimplementation of Image Joint Embedding Predictive Architecture (Assran et al., CVPR 2023). Read the paper, implemented end-to-end, trained and analyzed results — block masking with aspect-ratio constraints, dual-encoder with EMA target, predictor with learnable mask tokens.",
-    ijepa_link: "Code coming soon",
-    lewm_title: "LeWorldModel",
-    lewm_desc: "Study reimplementation of the JEPA-based world model for robotics (arXiv 2603.19312). Reading the paper and progressively implementing — single encoder ViT, AdaLN action conditioning, SIGReg anti-collapse regularization, end-to-end gradient training without EMA.",
+    jepa_title: "JEPA-ViT → LeWorldModel",
+    jepa_desc: "From-scratch reimplementation of the Facebook Research JEPA world model for robotics (github.com/facebookresearch/jepa-wms). Still in progress.",
     smart_title: "SmartHome-AI",
     smart_desc: "Personal project — modular, privacy-focused smart home assistant powered by local LLMs. Multi-agent architecture routing requests between specialized agents (weather, news, calendar, home automation). Fully containerized, runs offline on a home server.",
     smart_link: "View on GitHub →",
-    fdtd_title: "World Model for Physical Simulation",
-    fdtd_desc: "Exploring JEPA-based world models applied to electromagnetic simulation — using the LeWorldModel architecture as a foundation to learn latent dynamics of FDTD systems for metasurface inverse design. A natural bridge between the ML portfolio and the PhD research.",
+    minitoto_title: "MiniToto",
+    minitoto_desc: "Reproduction study of Datadog Toto for zero-shot anomaly detection on real observability metrics. Evaluated Toto-Open-Base-1.0 (151M params, Apache 2.0) against Z-Score and IsolationForest baselines, then fine-tuned with LoRA (rank 16, ~1.3% params) on NAB AWS CloudWatch — 17 series, 67,740 points, 9.32% anomaly rate. Results: Toto zero-shot F1 0.174 / NAB 42.8 — Z-Score F1 0.212 / NAB 50.4 — IForest F1 0.297 / NAB −152. Built as a technical deep-dive for the Datadog DAIR research engineer role.",
     eyebrow_exp: "Background", sec_exp: "Experience",
     role_phd: "PhD Candidate — CIFRE", org_phd: "Paris-Saclay University × STMicroelectronics · Grenoble",
     desc_phd: "Large-scale deep learning surrogates for FDTD electromagnetic simulation (10⁶× inference acceleration). Diffusion Schrödinger bridges for inverse design of photonic metasurfaces. Distributed training on GPU clusters via Ray on Azure.",
@@ -1109,16 +1110,13 @@ const translations = {
     stat_epochs: "I-JEPA entraîné", stat_years: "Thèse CIFRE",
     eyebrow_projects: "Portfolio ML", sec_projects: "Projets",
     badge_done: "✓ Terminé", badge_wip: "⟳ En cours", badge_soon: "◌ À venir",
-    ijepa_title: "I-JEPA",
-    ijepa_desc: "Réimplémentation d'étude de l'Image Joint Embedding Predictive Architecture (Assran et al., CVPR 2023). Lecture du papier, implémentation de bout en bout, entraînement et analyse des résultats — masquage par blocs, double encodeur avec cible EMA, prédicteur avec tokens masqués apprenables.",
-    ijepa_link: "Code bientôt disponible",
-    lewm_title: "LeWorldModel",
-    lewm_desc: "Réimplémentation d'étude du world model JEPA pour la robotique (arXiv 2603.19312). Lecture progressive du papier et implémentation — ViT encodeur unique, conditionnement d'action AdaLN, régularisation anti-effondrement SIGReg, entraînement gradient bout en bout sans EMA.",
+    jepa_title: "JEPA-ViT → LeWorldModel",
+    jepa_desc: "Réimplémentation from-scratch du world model JEPA pour la robotique de Facebook Research (github.com/facebookresearch/jepa-wms). En cours.",
     smart_title: "SmartHome-AI",
     smart_desc: "Projet personnel — assistant domotique modulaire et respectueux de la vie privée, propulsé par des LLM locaux. Architecture multi-agents routant les requêtes entre agents spécialisés (météo, actualités, calendrier, domotique). Entièrement conteneurisé, fonctionne hors-ligne.",
     smart_link: "Voir sur GitHub →",
-    fdtd_title: "World Model pour la Simulation Physique",
-    fdtd_desc: "Exploration des world models JEPA appliqués à la simulation électromagnétique — utilisation de l'architecture LeWorldModel pour apprendre la dynamique latente des systèmes FDTD pour la conception inverse de métasurfaces. Un pont naturel entre le portfolio ML et la thèse.",
+    minitoto_title: "MiniToto",
+    minitoto_desc: "Étude de reproduction de Datadog Toto pour la détection d'anomalies zero-shot sur des métriques d'observabilité réelles. Évaluation de Toto-Open-Base-1.0 (151M params) face aux baselines Z-Score et IsolationForest, puis fine-tuning LoRA (rank 16, ~1,3% de params) sur NAB AWS CloudWatch — 17 séries, 67 740 points, 9,32% d'anomalies. Résultats : Toto zero-shot F1 0,174 / NAB 42,8 — Z-Score F1 0,212 / NAB 50,4 — IForest F1 0,297 / NAB −152. Réalisé comme approfondissement technique pour le poste d'ingénieur de recherche DAIR chez Datadog.",
     eyebrow_exp: "Parcours", sec_exp: "Expérience",
     role_phd: "Doctorant — CIFRE", org_phd: "Université Paris-Saclay × STMicroelectronics · Grenoble",
     desc_phd: "Modèles de substitution deep learning à grande échelle pour la simulation FDTD (accélération 10⁶×). Ponts de Schrödinger par diffusion pour la conception inverse de métasurfaces photoniques. Entraînement distribué sur clusters GPU via Ray sur Azure.",
@@ -1166,16 +1164,13 @@ const translations = {
     stat_epochs: "I-JEPA trainiert", stat_years: "CIFRE-Doktorat",
     eyebrow_projects: "ML-Portfolio", sec_projects: "Projekte",
     badge_done: "✓ Abgeschlossen", badge_wip: "⟳ In Arbeit", badge_soon: "◌ Geplant",
-    ijepa_title: "I-JEPA",
-    ijepa_desc: "Studienreimplementierung der Image Joint Embedding Predictive Architecture (Assran et al., CVPR 2023). Paper gelesen, End-to-End implementiert, trainiert und Ergebnisse analysiert — Blockmasking, Dual-Encoder mit EMA-Ziel, Prädiktor mit lernbaren Masken-Tokens.",
-    ijepa_link: "Code folgt bald",
-    lewm_title: "LeWorldModel",
-    lewm_desc: "Studienreimplementierung des JEPA-basierten Weltmodells für Robotik (arXiv 2603.19312). Schrittweise Implementierung — einzelner ViT-Encoder, AdaLN-Aktionskonditionierung, SIGReg-Anti-Kollaps-Regularisierung, End-to-End-Gradiententraining ohne EMA.",
+    jepa_title: "JEPA-ViT → LeWorldModel",
+    jepa_desc: "Reimplementierung des JEPA-Weltmodells für Robotik von Facebook Research (github.com/facebookresearch/jepa-wms) von Grund auf. Noch in Arbeit.",
     smart_title: "SmartHome-AI",
     smart_desc: "Persönliches Projekt — modularer, datenschutzorientierter Smart-Home-Assistent auf Basis lokaler LLMs. Multi-Agenten-Architektur mit spezialisierten Agenten (Wetter, Nachrichten, Kalender, Hausautomation). Vollständig containerisiert, läuft offline.",
     smart_link: "Auf GitHub ansehen →",
-    fdtd_title: "Weltmodell für physikalische Simulation",
-    fdtd_desc: "Erforschung JEPA-basierter Weltmodelle für elektromagnetische Simulation — Einsatz der LeWorldModel-Architektur zum Erlernen latenter FDTD-Dynamiken für inverses Metaoberflächen-Design. Eine natürliche Brücke zwischen ML-Portfolio und Doktorarbeit.",
+    minitoto_title: "MiniToto",
+    minitoto_desc: "Reproduktionsstudie zu Datadog Toto für Zero-Shot-Anomalieerkennung auf realen Observability-Metriken. Bewertung von Toto-Open-Base-1.0 (151M Parameter) gegen Z-Score- und IsolationForest-Baselines, dann LoRA-Feinabstimmung (Rank 16, ~1,3% Parameter) auf NAB AWS CloudWatch — 17 Serien, 67.740 Punkte. Ergebnisse: Toto zero-shot F1 0,174 / NAB 42,8 — Z-Score F1 0,212 / NAB 50,4 — IForest F1 0,297 / NAB −152. Als technische Vorbereitung für die Stelle als Forschungsingenieur bei Datadog DAIR erstellt.",
     eyebrow_exp: "Werdegang", sec_exp: "Berufserfahrung",
     role_phd: "Doktorand — CIFRE", org_phd: "Universität Paris-Saclay × STMicroelectronics · Grenoble",
     desc_phd: "Großmaßstäbliche Deep-Learning-Surrogatmodelle für FDTD-Simulation (10⁶×-Beschleunigung). Diffusions-Schrödinger-Brücken für inverses Design. Verteiltes Training auf GPU-Clustern via Ray auf Azure.",
@@ -1223,16 +1218,13 @@ const translations = {
     stat_epochs: "I-JEPA addestrato", stat_years: "Dottorato CIFRE",
     eyebrow_projects: "Portfolio ML", sec_projects: "Progetti",
     badge_done: "✓ Completato", badge_wip: "⟳ In corso", badge_soon: "◌ In arrivo",
-    ijepa_title: "I-JEPA",
-    ijepa_desc: "Reimplementazione di studio dell'Image Joint Embedding Predictive Architecture (Assran et al., CVPR 2023). Lettura del paper, implementazione end-to-end, addestramento e analisi dei risultati — mascheratura a blocchi, doppio encoder con target EMA, predittore con token maschera apprendibili.",
-    ijepa_link: "Codice in arrivo",
-    lewm_title: "LeWorldModel",
-    lewm_desc: "Reimplementazione di studio del world model JEPA per la robotica (arXiv 2603.19312). Lettura progressiva del paper e implementazione — ViT encoder singolo, condizionamento azione AdaLN, regolarizzazione anti-collasso SIGReg, training gradient end-to-end senza EMA.",
+    jepa_title: "JEPA-ViT → LeWorldModel",
+    jepa_desc: "Reimplementazione from-scratch del world model JEPA per la robotica di Facebook Research (github.com/facebookresearch/jepa-wms). Ancora in corso.",
     smart_title: "SmartHome-AI",
     smart_desc: "Progetto personale — assistente domotico modulare e privacy-first alimentato da LLM locali. Architettura multi-agente con agenti specializzati (meteo, notizie, calendario, domotica). Completamente containerizzato, funziona offline.",
     smart_link: "Vedi su GitHub →",
-    fdtd_title: "World Model per la Simulazione Fisica",
-    fdtd_desc: "Esplorazione di world model JEPA applicati alla simulazione elettromagnetica — utilizzo dell'architettura LeWorldModel per apprendere la dinamica latente dei sistemi FDTD per il design inverso di metasuperfici. Un ponte naturale tra portfolio ML e dottorato.",
+    minitoto_title: "MiniToto",
+    minitoto_desc: "Studio di riproduzione di Datadog Toto per il rilevamento anomalie zero-shot su metriche di osservabilità reali. Valutazione di Toto-Open-Base-1.0 (151M params) contro le baseline Z-Score e IsolationForest, poi fine-tuning LoRA (rank 16, ~1,3% params) su NAB AWS CloudWatch — 17 serie, 67.740 punti. Risultati: Toto zero-shot F1 0,174 / NAB 42,8 — Z-Score F1 0,212 / NAB 50,4 — IForest F1 0,297 / NAB −152. Realizzato come approfondimento tecnico per il ruolo di ricercatore DAIR presso Datadog.",
     eyebrow_exp: "Percorso", sec_exp: "Esperienza",
     role_phd: "Dottorando — CIFRE", org_phd: "Università Paris-Saclay × STMicroelectronics · Grenoble",
     desc_phd: "Modelli surrogati deep learning su larga scala per simulazione FDTD (accelerazione 10⁶×). Ponti di Schrödinger per diffusione per il design inverso. Training distribuito su cluster GPU via Ray su Azure.",
@@ -1280,16 +1272,13 @@ const translations = {
     stat_epochs: "I-JEPA entrenado", stat_years: "Doctorado CIFRE",
     eyebrow_projects: "Portfolio ML", sec_projects: "Proyectos",
     badge_done: "✓ Completado", badge_wip: "⟳ En progreso", badge_soon: "◌ Próximamente",
-    ijepa_title: "I-JEPA",
-    ijepa_desc: "Reimplementación de estudio de Image Joint Embedding Predictive Architecture (Assran et al., CVPR 2023). Lectura del paper, implementación end-to-end, entrenamiento y análisis de resultados — enmascaramiento por bloques, doble encoder con objetivo EMA, predictor con tokens de máscara aprendibles.",
-    ijepa_link: "Código próximamente",
-    lewm_title: "LeWorldModel",
-    lewm_desc: "Reimplementación de estudio del world model JEPA para robótica (arXiv 2603.19312). Lectura progresiva del paper e implementación — ViT encoder único, condicionamiento de acción AdaLN, regularización anti-colapso SIGReg, entrenamiento gradient end-to-end sin EMA.",
+    jepa_title: "JEPA-ViT → LeWorldModel",
+    jepa_desc: "Reimplementación from-scratch del world model JEPA para robótica de Facebook Research (github.com/facebookresearch/jepa-wms). En progreso.",
     smart_title: "SmartHome-AI",
     smart_desc: "Proyecto personal — asistente domótico modular y enfocado en la privacidad, impulsado por LLM locales. Arquitectura multi-agente con agentes especializados (clima, noticias, calendario, domótica). Completamente contenedorizado, funciona sin conexión.",
     smart_link: "Ver en GitHub →",
-    fdtd_title: "World Model para Simulación Física",
-    fdtd_desc: "Exploración de world models JEPA aplicados a simulación electromagnética — usando la arquitectura LeWorldModel para aprender dinámicas latentes de sistemas FDTD para diseño inverso de metasuperficies. Un puente natural entre el portfolio ML y la tesis doctoral.",
+    minitoto_title: "MiniToto",
+    minitoto_desc: "Estudio de reproducción de Datadog Toto para detección de anomalías zero-shot en métricas de observabilidad reales. Evaluación de Toto-Open-Base-1.0 (151M params) frente a las baselines Z-Score e IsolationForest, luego fine-tuning con LoRA (rank 16, ~1,3% params) en NAB AWS CloudWatch — 17 series, 67.740 puntos. Resultados: Toto zero-shot F1 0,174 / NAB 42,8 — Z-Score F1 0,212 / NAB 50,4 — IForest F1 0,297 / NAB −152. Desarrollado como estudio técnico para el puesto de investigador DAIR en Datadog.",
     eyebrow_exp: "Trayectoria", sec_exp: "Experiencia",
     role_phd: "Doctorando — CIFRE", org_phd: "Universidad Paris-Saclay × STMicroelectronics · Grenoble",
     desc_phd: "Modelos sustitutos de deep learning a gran escala para simulación FDTD (aceleración 10⁶×). Puentes de Schrödinger por difusión para diseño inverso. Entrenamiento distribuido en clústeres GPU vía Ray en Azure.",
@@ -1374,12 +1363,11 @@ function applyLang(lang) {
   const projTitles = document.querySelectorAll('.project-title');
   const projDescs  = document.querySelectorAll('.project-desc');
   const projLinks  = document.querySelectorAll('.project-link');
-  const pTitleKeys = ['ijepa_title','lewm_title','smart_title','fdtd_title'];
-  const pDescKeys  = ['ijepa_desc','lewm_desc','smart_desc','fdtd_desc'];
+  const pTitleKeys = ['jepa_title','smart_title','minitoto_title'];
+  const pDescKeys  = ['jepa_desc','smart_desc','minitoto_desc'];
   projTitles.forEach((el,i) => { if (t[pTitleKeys[i]]) el.textContent = t[pTitleKeys[i]]; });
   projDescs.forEach((el,i)  => { if (t[pDescKeys[i]])  el.textContent = t[pDescKeys[i]]; });
-  if (projLinks[0]) projLinks[0].textContent = t.ijepa_link;
-  if (projLinks[1]) projLinks[1].textContent = t.smart_link;
+  if (projLinks[0]) projLinks[0].textContent = t.smart_link;
 
   // Experience roles, orgs, descs
   const roles  = document.querySelectorAll('.exp-role');
