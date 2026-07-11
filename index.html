@@ -551,35 +551,36 @@
 
       <div class="project-card reveal reveal-delay-1">
         <div class="project-card-left">
-          <div class="project-badge badge-wip">⟳ In progress</div>
-          <h3 class="project-title">JEPA-WMS — VLA for Robotic Pushing</h3>
+          <div class="project-badge badge-done">✓ Complete</div>
+          <h3 class="project-title">VLA-PushT: Robotic Pushing from Scratch</h3>
           <p class="project-desc">
-            A Vision-Language-Action policy built and debugged from scratch to solve the
-            <strong>PushT</strong> manipulation task — frozen DINOv2 encoder + Qwen2.5-0.5B+LoRA
-            (plus two lighter from-scratch variants, VLALite / VLALiteK), trained on
-            <a href="https://github.com/facebookresearch/jepa-wms" target="_blank" style="color:var(--accent);text-decoration:none;">facebook/jepa-wms</a>
-            (pusht_noise split). The focus wasn't just a final number: found and fixed a silent
-            train/val normalization bug, traced a 0%-success closed-loop failure to a
-            self-reinforcing zero-net-displacement limit cycle (an earlier "model is blind to
-            the block" hypothesis was caught and retracted after a test-bug fix), added action
-            chunking (K=8) to break it, and scanned the full 18,685-episode dataset to confirm
-            expert demonstrations contain <em>zero</em> stall-recovery examples. Scaling training
-            data 500 → 18,685 episodes — architecture held fixed — nearly tripled closed-loop
-            coverage, the headline finding of the project.
+            Vision-Language-Action policy trained from scratch on the <strong>PushT</strong>
+            manipulation task: frozen DINOv2 encoder + Qwen2.5-0.5B with LoRA, plus two lighter
+            variants (VLALite, VLALiteK), trained on
+            <a href="https://github.com/facebookresearch/jepa-wms" target="_blank" style="color:var(--accent);text-decoration:none;">facebook/jepa-wms</a>.
+            Fixed a silent train/val normalization bug, diagnosed a closed-loop freeze as a
+            self-reinforcing zero-displacement limit cycle, and added action chunking (K=8) to
+            break it. Scanned all 18,685 episodes and confirmed expert demos contain zero
+            recovery examples. Scaling training data from 500 to 18,685 episodes nearly tripled
+            closed-loop coverage, the main finding of the project.
           </p>
           <div class="project-meta">
             <span class="meta-item">Coverage <strong>0.03–0.07 → 0.169 mean · 0.85 best ep.</strong></span>
             <span class="meta-item">Val loss <strong>0.0136 → 0.0032</strong></span>
             <span class="meta-item">Pixel MAE <strong>34.8 → 21.7 px</strong></span>
           </div>
+          <div style="margin-bottom:1.2rem;">
+            <img src="https://raw.githubusercontent.com/loumpare/VLA-PushT/main/eval_outputs/architecture_comparison.png" alt="VLA vs VLALite vs VLALiteK architecture comparison" loading="lazy" style="width:100%;border-radius:6px;border:1px solid var(--border);display:block;background:#fff;">
+            <div style="font-family:'JetBrains Mono',monospace;font-size:0.65rem;color:var(--dim);text-align:center;margin-top:0.3rem;">VLA, VLALite, VLALiteK: shared DINOv2 + action-token backbone, three sequence heads</div>
+          </div>
           <div style="display:flex;gap:0.8rem;margin-bottom:1.2rem;flex-wrap:wrap;">
             <div style="flex:1;min-width:160px;">
-              <img src="https://raw.githubusercontent.com/loumpare/JEPA-WMS_From-Scratch/main/eval_outputs/vla_lite/gym_rollout_ep0.gif" alt="500 episodes — policy stuck on the goal marker" loading="lazy" style="width:100%;border-radius:6px;border:1px solid var(--border);display:block;">
-              <div style="font-family:'JetBrains Mono',monospace;font-size:0.65rem;color:var(--dim);text-align:center;margin-top:0.3rem;">500 episodes — coverage 0.00</div>
+              <img src="https://raw.githubusercontent.com/loumpare/VLA-PushT/main/eval_outputs/vla_lite/gym_rollout_ep0.gif" alt="500 episodes, policy stuck on the goal marker" loading="lazy" style="width:100%;border-radius:6px;border:1px solid var(--border);display:block;">
+              <div style="font-family:'JetBrains Mono',monospace;font-size:0.65rem;color:var(--dim);text-align:center;margin-top:0.3rem;">500 episodes, coverage 0.00</div>
             </div>
             <div style="flex:1;min-width:160px;">
-              <img src="https://raw.githubusercontent.com/loumpare/JEPA-WMS_From-Scratch/main/eval_outputs/vla_lite_full/gym_rollout_ep10.gif" alt="Full 18,685-episode dataset — near-success rollout" loading="lazy" style="width:100%;border-radius:6px;border:1px solid var(--border);display:block;">
-              <div style="font-family:'JetBrains Mono',monospace;font-size:0.65rem;color:var(--dim);text-align:center;margin-top:0.3rem;">18,685 episodes — coverage 0.85</div>
+              <img src="https://raw.githubusercontent.com/loumpare/VLA-PushT/main/eval_outputs/vla_lite_full/gym_rollout_ep10.gif" alt="Full 18,685-episode dataset, near-success rollout" loading="lazy" style="width:100%;border-radius:6px;border:1px solid var(--border);display:block;">
+              <div style="font-family:'JetBrains Mono',monospace;font-size:0.65rem;color:var(--dim);text-align:center;margin-top:0.3rem;">18,685 episodes, coverage 0.85</div>
             </div>
           </div>
           <div class="project-tags">
@@ -587,7 +588,7 @@
             <span class="tag">Qwen2.5+LoRA</span><span class="tag">Action Chunking</span>
             <span class="tag">Robotics</span><span class="tag">PushT</span>
           </div>
-          <a href="https://github.com/loumpare/JEPA-WMS_From-Scratch" class="project-link" target="_blank">View on GitHub →</a>
+          <a href="https://github.com/loumpare/VLA-PushT" class="project-link" target="_blank">View on GitHub →</a>
         </div>
         <div class="project-card-right">
           <div class="project-number">01</div>
