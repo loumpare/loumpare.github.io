@@ -1,0 +1,38 @@
+ref,date,score,description
+55914294,2026-08-31 11:29,0.09,"First real trained-agent submission (Eyes+Brain, GRPO+PPO-clip+Go-Explore archive) -- validates full pipeline end-to-end, no wins found locally on ls20"
+56011798,2026-09-04 11:38,0.01,ToolsAgent v5: persistent brain notes (Qwen carries a short hypothesis about the game across its own calls instead of rederiving from scratch each time) + fixed
+56044148,2026-09-06 01:25,0.0,"ToolsAgent v6: fixed a real VisionToolsAgent regression (missing 2026-09-04 arrival-check/anti-loop-watchdog port, commit 13324f2) plus a residual HUD-bar loop "
+56065271,2026-09-07 00:08,0.06,UnifiedVisionAgent v2 (GPU + calibration): ONE qwen3.8-27B multimodal call does both scene perception and decision per consult (src/llm_unified_vision_agent.py)
+56195748,2026-09-13 00:42,0.87,"Duck Harness (Tufa Labs, public notebook) + 7 sandbox tools (diff_frames, find_shared_palette_regions, detect_symmetry, state_graph_summary, crop_object, detect"
+56250692,2026-09-15 09:10,0.06,First qualified public-frame CPU baseline; source f6390ae; 128 actions/game; no learned-model claim
+56272981,2026-09-16 07:29,0.06,Reproducibility rerun of submission 56250692; unchanged version 1; 128 actions/game; no new policy
+56281544,2026-09-16 14:57,0.69,"Executable World Models (EWM): agent writes/verifies/refactors engine.py+state_io.py per game, generic beam-search planner provided. Local dev (25 public games)"
+56369160,2026-09-19 18:46,1.0,"Duck Harness zero-modified baseline (clean resubmit, real GPU, no CPU workaround hack). Local offline 25-public-game dev run (real submission pipeline): mean 2."
+56463200,2026-09-22 11:35,0.12,"Final diagnostic ARC-091 guarded CPU explorer; 2048 actions/game, seed 91001; no Gemma; source 742b967"
+56495907,2026-09-23 14:27,0.76,Baseline re-run (variance data point) -- local mean 1.36 vs v6's 2.85
+56586391,2026-09-26 18:33,0.76,"Lever T: concurrency 28->22 + request_timeout_seconds() floored at 90s (fixes the request-timeout-cascade bug: min(analyzer_timeout, time_remaining) collapsing "
+56702390,2026-09-30 08:40,0.91,Lever N+R+S combined: N (bare-python format recovery) + R (sanitizer/prose-detector/hard-fallback) + new S (AVO-inspired stagnation supervisor: after 4 turns wi
+56831570,2026-10-04 18:45,22.03,"Flash-Next clone of dfranzen Milestone-2 solution (Qwen3.8 Flash-Next W4A16); Phase A 25 public games mean 43.96, 24/25 games >=1 level, 1 pass, single run"
+56861574,2026-10-05 20:47,32.36,"Flash-Next clone, diag variant (v1 + ARC3_DIAG_CONCURRENCY=1 log-only). Phase A mean 53.39"
+56877747,2026-10-06 10:05,20.95,"ARC-096 independent official replication; unchanged Flash-Next clone v1, upstream a371fb1. Offline Phase A mean 47.564684 over 25 games; not an official score. "
+56906700,2026-10-07 09:18,26.94,"Resubmission of diag v1 (Flash-Next clone, log-only diag flag), new baseline; previously real 32.36; no new Phase A"
+56942497,2026-10-08 07:42,26.29,"[daily-diag 2026-10-08] diag v1 (manual, SDK)"
+56980188,2026-10-09 00:10,24.58,[daily-diag 2026-10-09] diag v1 auto-submit loop
+57024828,2026-10-10 00:10,0.0,[daily-diag 2026-10-10] diag v1 auto-submit loop
+57056109,2026-10-11 00:10,29.98,[daily-diag 2026-10-11] diag v3 auto-submit loop
+57094544,2026-10-12 03:52,26.57,[daily-diag 2026-10-12] diag v3 auto-submit loop
+57123688,2026-10-13 00:10,26.3,[auto-pick 2026-10-13] arc-agi-3-flashnext-diag v3 (default: no candidate >= 52.0)
+57160534,2026-10-14 00:10,25.03,[auto-pick 2026-10-14] arc-agi-3-flashnext-pure07 v1 (default: no candidate >= 52.0)
+57199269,2026-10-15 00:10,28.22,[auto-pick 2026-10-15] arc-agi-3-flashnext-pure07 v1 (default: no candidate >= 52.0)
+57248272,2026-10-16 00:10,30.99,[auto-pick 2026-10-16] arc-agi-3-flashnext-pure07 v1 (default: no candidate >= 52.0)
+57288053,2026-10-17 00:10,23.5,[auto-pick 2026-10-17] arc-agi-3-flashnext-pure07 v1 (default: no candidate >= 52.0)
+57330917,2026-10-18 00:10,27.56,[auto-pick 2026-10-18] arc-agi-3-flashnext-pure07 v1 (default: no candidate >= 52.0)
+57374020,2026-10-19 00:10,23.8,[auto-pick 2026-10-19] arc-agi-3-flashnext-pure07 v1 (default: no candidate >= 52.0)
+57414272,2026-10-20 00:10,0.0,[auto-pick 2026-10-20] arc-agi-3-flashnext-pure07 v1 (default: no candidate >= 52.0)
+57460629,2026-10-21 01:45,0.0,[auto-pick 2026-10-21] arc-agi-3-flashnext-pure07b v1 (default: no candidate >= 52.0)
+57502135,2026-10-22 00:10,0.0,[auto-pick 2026-10-22] arc-agi-3-flashnext-pure07b v1 (default: no candidate >= 52.0)
+57542386,2026-10-23 00:10,28.81,[auto-pick 2026-10-23] arc-agi-3-flashnext-pure07ka v2 (default: no candidate >= 52.0)
+57576036,2026-10-24 00:10,28.36,[auto-pick 2026-10-24] arc-agi-3-flashnext-pure07ka v2 (default: no candidate >= 52.0)
+57610896,2026-10-25 00:10,30.53,[auto-pick 2026-10-25] arc-agi-3-flashnext-pure07ka v2 (default: no candidate >= 52.0)
+57648712,2026-10-26 01:10,25.26,[auto-pick 2026-10-26] arc-agi-3-flashnext-pure07ka v2 (default: no candidate >= 52.0)
+57684413,2026-10-27 01:10,25.51,[auto-pick 2026-10-27] arc-agi-3-flashnext-pure07ka v2 (default: no candidate >= 52.0)

@@ -1,0 +1,20 @@
+dir,label,category,mean,median,won,levels,actions,tokens,source
+flashnext_clone_phaseA_v1,clone v1,control,43.96,29.39,7,104,5253,4521296,benchmark.json
+flashnext_clone_phaseA_v2,clone v2,control,47.94,47.62,7,107,5428,4243004,benchmark.json
+flashnext_diag_phaseA_v1,diag v1,control,53.39,52.07,8,112,4893,4456605,benchmark.json
+flashnext_force_v1,force,control,48.49,47.62,7,109,5465,3999304,benchmark.json
+flashnext_pure07,pure07,control,48.29,41.67,7,,5512,4240132,summary.txt
+flashnext_ledger_v1,ledger v1,control,39.27,21.31,5,94,5084,4357519,benchmark.json
+flashnext_ledger_v2,ledger v2,control,44.34,45.3,4,104,5113,4350059,benchmark.json
+flashnext_kvguard_v1,kvguard,control,42.36,22.69,7,96,4621,3973346,benchmark.json
+flashnext_lever12_v1,lever12,control,41.78,28.57,6,93,3965,3187027,benchmark.json
+flashnext_summ_v1,summaries v1,context,27.29,14.29,1,74,2732,2362576,benchmark.json
+flashnext_summ2_v1,summaries v2,context,29.02,14.29,3,73,2637,2208096,benchmark.json
+flashnext_ftmerge_phasea,fine-tune merge,model,35.94,27.26,5,,5714,4528949,summary.txt
+flashnext_nvfp4w4a16_v2,NVFP4 W4A16,model,28.59,5.92,3,72,2691,2113164,benchmark.json
+flashnext_a5b_v2,A5B (top-5 experts),model,31.5,16.67,4,84,4940,5160336,benchmark.json
+flashnext_thinkingcap_v3,ThinkingCap,reasoning,26.75,13.33,4,81,8619,3212353,benchmark.json
+flashnext_think0_v1,thinking off,reasoning,4.2,0.0,0,8,7642,849920,benchmark.json
+flashnext_3exp_v1,effort xhigh (control pass),reasoning,42.45,21.22,8,94,4382,3987512,benchmark.json passes
+flashnext_3exp_v1,effort medium,reasoning,41.33,37.95,7,97,5104,3996051,benchmark.json passes
+flashnext_3exp_v1,effort ladder U,reasoning,46.32,39.08,9,103,4829,4316448,benchmark.json passes
