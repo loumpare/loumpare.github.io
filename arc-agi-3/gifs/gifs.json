@@ -1,0 +1,26 @@
+{
+ "ft09": {
+  "levels": 6,
+  "n_levels": 6,
+  "actions": 80,
+  "kb": 79
+ },
+ "lp85": {
+  "levels": 8,
+  "n_levels": 8,
+  "actions": 105,
+  "kb": 282
+ },
+ "sb26": {
+  "levels": 8,
+  "n_levels": 8,
+  "actions": 146,
+  "kb": 159
+ },
+ "cd82": {
+  "levels": 6,
+  "n_levels": 6,
+  "actions": 157,
+  "kb": 166
+ }
+}

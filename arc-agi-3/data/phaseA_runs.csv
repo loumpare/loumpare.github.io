@@ -15,6 +15,10 @@ flashnext_nvfp4w4a16_v2,NVFP4 W4A16,model,28.59,5.92,3,72,2691,2113164,benchmark
 flashnext_a5b_v2,A5B (top-5 experts),model,31.5,16.67,4,84,4940,5160336,benchmark.json
 flashnext_thinkingcap_v3,ThinkingCap,reasoning,26.75,13.33,4,81,8619,3212353,benchmark.json
 flashnext_think0_v1,thinking off,reasoning,4.2,0.0,0,8,7642,849920,benchmark.json
+flashnext_pure07ka_v3,study control (v3),study,45.04,44.29,5,107,5709,4320832,benchmark.json
+study_a1_preserve_off,A1 reasoning not kept,study,8.38,3.2,1,35,2112,4587422,benchmark.json
+study_a2_drain24,A2 context 24K,study,36.7,21.43,4,91,4197,3133783,benchmark.json
+study_a3_textonly,A3 text only,study,49.09,47.62,7,110,5641,4715163,benchmark.json
 flashnext_3exp_v1,effort xhigh (control pass),reasoning,42.45,21.22,8,94,4382,3987512,benchmark.json passes
 flashnext_3exp_v1,effort medium,reasoning,41.33,37.95,7,97,5104,3996051,benchmark.json passes
 flashnext_3exp_v1,effort ladder U,reasoning,46.32,39.08,9,103,4829,4316448,benchmark.json passes
