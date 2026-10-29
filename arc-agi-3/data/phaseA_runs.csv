@@ -21,6 +21,8 @@ study_a2_drain24,A2 context 24K,study,36.7,21.43,4,91,4197,3133783,benchmark.jso
 study_a3_textonly,A3 text only,study,49.09,47.62,7,110,5641,4715163,benchmark.json
 study_a2_drain24_rep,A2 replicate,study,35.8,14.29,6,85,3178,2592450,benchmark.json
 study_a4_memfull,A4 memory sections,study,40.62,28.84,6,98,5556,4188018,benchmark.json
+study_ctrl2,study control #2,study,44.83,33.47,7,100,4974,4424943,benchmark.json
+study_a5_nopersist,A5 persistent fns off,study,50.4,47.62,7,110,5668,4295726,benchmark.json
 flashnext_3exp_v1,effort xhigh (control pass),reasoning,42.45,21.22,8,94,4382,3987512,benchmark.json passes
 flashnext_3exp_v1,effort medium,reasoning,41.33,37.95,7,97,5104,3996051,benchmark.json passes
 flashnext_3exp_v1,effort ladder U,reasoning,46.32,39.08,9,103,4829,4316448,benchmark.json passes
