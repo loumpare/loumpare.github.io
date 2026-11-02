@@ -23,6 +23,16 @@ study_a2_drain24_rep,A2 replicate,study,35.8,14.29,6,85,3178,2592450,benchmark.j
 study_a4_memfull,A4 memory sections,study,40.62,28.84,6,98,5556,4188018,benchmark.json
 study_ctrl2,study control #2,study,44.83,33.47,7,100,4974,4424943,benchmark.json
 study_a5_nopersist,A5 persistent fns off,study,50.4,47.62,7,110,5668,4295726,benchmark.json
+study_ctrl3,study control #3,study,42.71,38.61,4,103,5304,4440751,benchmark.json
+study_lean1,lean A3+A5 #1,study,45.67,44.32,8,103,5962,4833877,benchmark.json
+study_lean2,lean A3+A5 #2,study,44.36,35.41,8,103,5207,5017992,benchmark.json
+study_lean3,lean A3+A5 #3,study,45.7,39.73,9,102,5234,5022427,benchmark.json
+study_lean4,lean A3+A5 #4,study,43.71,40.6,6,105,5637,4918913,benchmark.json
+copy_lalalia2,Lalalia #1,study,45.05,34.59,7,105,5055,4409433,benchmark.json
+copy_lalalia3,Lalalia #2,study,57.19,50.09,12,117,5444,4354722,benchmark.json
+copy_lalalia4,Lalalia #3,study,44.53,37.74,7,,6074,,summary.txt
+copy_lalalia5,Lalalia #4,study,44.73,42.33,7,101,5124,4343399,benchmark.json
+study_a7_drain90,A7 context 90K,study,44.52,21.43,8,103,5772,4265025,benchmark.json
 flashnext_3exp_v1,effort xhigh (control pass),reasoning,42.45,21.22,8,94,4382,3987512,benchmark.json passes
 flashnext_3exp_v1,effort medium,reasoning,41.33,37.95,7,97,5104,3996051,benchmark.json passes
 flashnext_3exp_v1,effort ladder U,reasoning,46.32,39.08,9,103,4829,4316448,benchmark.json passes

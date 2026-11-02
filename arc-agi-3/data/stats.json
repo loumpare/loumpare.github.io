@@ -15,10 +15,10 @@
  "z_nvfp4w4a16": -3.899401985346269,
  "n_controls_per_game": 8,
  "share_variance_top8_games": 0.7274782664681475,
- "real_oct_n": 19,
- "real_oct_mean": 26.923157894736843,
- "real_oct_sd": 2.8680869594587857,
+ "real_oct_n": 25,
+ "real_oct_mean": 26.1948,
+ "real_oct_sd": 3.430510311892387,
  "real_oct_max": 32.36,
- "real_n_total": 37,
+ "real_n_total": 43,
  "real_n_zero": 5
 }
